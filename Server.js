@@ -1,6 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import passport from 'passport'
 
@@ -16,6 +17,7 @@ import passportConfig from './configurations/passport-config.js'
 
 const application = express()
 application.use(passport.initialize())
+application.use(cors({ credentials: true }))
 application.use(bodyParser.urlencoded({ extended: true }))
 application.use(bodyParser.json())
 application.use(helmet())
