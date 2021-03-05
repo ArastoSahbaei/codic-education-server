@@ -32,12 +32,9 @@ ProductCategoryRoutes.routes(application)
 ProductBrandRoutes.routes(application)
 ShoppingCartRoutes.routes(application)
 NewsLetterSubscriptionRoutes.routes(application)
+
 application.use(Middlewares.notFound)
 application.use(Middlewares.errorHandler)
-
-if (process.env.NODE_ENV === "PRODUCTION") {
-	application.use(express.static('client/build'))
-}
 
 Configuration.connectToDatabase()
 Configuration.connectToPort(application)
