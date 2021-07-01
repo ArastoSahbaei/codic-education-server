@@ -38,16 +38,16 @@ const userSchema = Schema({
 		method: String,
 		number: String
 	},
-	shoppingCart: [{
+	shoppingCart: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'shoppingcart',
 		required: true
-	}],
-	newsLetterSubscription: [{
+	},
+	newsLetterSubscription: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'newslettersubscription',
 		required: true
-	}],
+	},
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
