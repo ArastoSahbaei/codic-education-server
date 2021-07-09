@@ -4,8 +4,8 @@ import ProductBrandModel from '../models/ProductBrand.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
 
 const createProduct = async (request, response) => {
-
-	const product = new ProductModel({
+  console.log(request.body);
+	const product = await new ProductModel({
 		title: request.body.title,
 		price: request.body.price,
 		quantity: request.body.quantity,
@@ -23,6 +23,7 @@ const createProduct = async (request, response) => {
 		await productBrand.save()
 		response.status(StatusCode.CREATED).send(savedProduct)
 	} catch (error) {
+    console.warn(error);
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
 	}
 }
