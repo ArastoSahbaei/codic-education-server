@@ -83,12 +83,12 @@ const captureOrder = (orderID) => {
   });
 };
 
-const sendProductsToPaypal = (products) => {
+const sendProductsToPaypal = (products, shipping) => {
   const itemTotal = calculateTotalPrice(products);
   const total = itemTotal; // TODO: fixme
   const handling = 0; // TODO: fixme
   const taxTotal = 0; // TODO: fixme
-  const shipping = 0; // TODO: fixme
+  const shippingCost = 0; // TODO: fixme
   const discount = 0; // TODO: fixme
   const finalDescription = "some products"; // TODO: fixme
   const paypalProducts = products.map(productToPaypalModel);
@@ -106,7 +106,7 @@ const sendProductsToPaypal = (products) => {
         locale: "en-US",
         landing_page: "BILLING",
         shipping_preference: "SET_PROVIDED_ADDRESS",
-        shipping_address: "Test test 123",
+        shipping_address: shipping.address,
         user_action: "CONTINUE",
       },
       payer: {
@@ -129,7 +129,7 @@ const sendProductsToPaypal = (products) => {
               },
               shipping: {
                 currency_code: "SEK",
-                value: shipping,
+                value: shippingCost,
               },
               handling: {
                 currency_code: "SEK",
@@ -147,17 +147,17 @@ const sendProductsToPaypal = (products) => {
           },
           items: paypalProducts,
           shipping: {
-            method: "United States Postal Service",
+            method: shipping.method,
             name: {
-              full_name: "John Doe",
+              full_name: shipping.fullName,
             },
             address: {
-              address_line_1: "123 Townsend St",
-              address_line_2: "Floor 6",
-              admin_area_2: "San Francisco",
-              admin_area_1: "CA",
-              postal_code: "94107",
-              country_code: "US",
+              address_line_1: shipping.addressFull,
+              address_line_2: '',
+              admin_area_1: shipping.shippingCity,
+              admin_area_2: shipping.shippingCity,
+              postal_code: shipping.shippingPostalCode,
+              country_code: shipping.countryCode,
             },
           },
         },
