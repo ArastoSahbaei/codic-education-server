@@ -17,7 +17,7 @@ const newsLetterSubscription = Schema({
 		ref: 'user',
 		/* required: true */
 	},
-	recieveNewsLetters: {
+	receiveNewsLetters: {
 		type: String,
 		required: true
 	}

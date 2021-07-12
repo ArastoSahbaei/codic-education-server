@@ -105,7 +105,7 @@ const registerNewUser = async (request, response, next) => {
 			const newsLetterSubscription = await new NewsLetterSubscriptionModel({
 				email: request.body.email,
 				user: user._id,
-				recieveNewsLetters: request.body.recieveNewsLetters
+				receiveNewsLetters: request.body.receiveNewsLetters
 			})
 			await newsLetterSubscription.save()
 

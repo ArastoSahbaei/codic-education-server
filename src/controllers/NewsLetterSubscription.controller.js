@@ -5,7 +5,7 @@ const addNewsLetterSubscription = async (request, response) => {
 	const newsLetterSubscription = new NewsLetterSubscriptionModel({
 		email: request.body.email,
 		user: request.body.user,
-		recieveNewsLetters: request.body.recieveNewsLetters
+		receiveNewsLetters: request.body.receiveNewsLetters
 	})
 	console.log('LOL')
 	try {
@@ -28,7 +28,7 @@ const getAllNewsLetterSubscriptions = async (request, response) => {
 const unsubscribeNewsLetter = async (request, response) => {
 	try {
 		const databaseResponse = await NewsLetterSubscriptionModel.findByIdAndUpdate(request.params.newsLetterId, {
-			recieveNewsLetters: false
+			receiveNewsLetters: false
 		}, { new: true })
 		console.log(request.params.newsLetterId)
 		response.status(StatusCode.OK).send(databaseResponse)
