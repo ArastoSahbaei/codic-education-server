@@ -85,9 +85,9 @@ const captureOrder = (orderID) => {
 
 const sendProductsToPaypal = (products, shipping) => {
   const itemTotal = calculateTotalPrice(products);
-  const total = itemTotal; // TODO: fixme
+  const total = itemTotal;
   const handling = 0; // TODO: fixme
-  const taxTotal = calculateTotalTax(products); // TODO: fixme
+  const taxTotal = calculateTotalTax(products);
   const shippingCost = 0; // TODO: fixme
   const discount = 0; // TODO: fixme
   const finalDescription = "some products"; // TODO: fixme
