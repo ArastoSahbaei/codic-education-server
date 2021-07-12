@@ -30,5 +30,24 @@ const productSchema = Schema({
 	}
 }, { timestamps: true })
 
+
+export const productToPaypalModel = (product) => ({
+	reference_id: product._id,
+	"unit_amount": {
+		"currency_code": "SEK",
+		"value": product.price
+	},
+  "tax": {
+			"currency_code": "SEK",
+			"value": "0.00" // TODO: fixme
+	},
+	sku: product._id,
+	name: product.name || "Unknown",
+  description: product.name || "Unknown",
+	quantity: 1,
+  categhory: product.productCategoryName || "Unknown",
+	currency: 'SEK'
+});
+
 const ProductModel = mongoose.model('product', productSchema)
 export default ProductModel

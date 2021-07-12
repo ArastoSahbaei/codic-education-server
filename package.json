@@ -19,6 +19,7 @@
 	"author": "Arasto Sahbaei (arasto.sahbaei@gmail.com)",
 	"license": "ISC",
 	"dependencies": {
+		"@paypal/checkout-server-sdk": "^1.0.2",
 		"bcrypt": "^5.0.0",
 		"cors": "^2.8.5",
 		"dotenv": "^8.2.0",
