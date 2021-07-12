@@ -1,5 +1,5 @@
 import paypal from "@paypal/checkout-server-sdk";
-import { calculateTotalPrice } from "../functions.js";
+import { CURRENCY, calculateTotalTax, calculateTotalPrice } from '../payments.js';
 import { productToPaypalModel } from "../models/Product.model.js";
 
 // Creating an environment
@@ -87,7 +87,7 @@ const sendProductsToPaypal = (products, shipping) => {
   const itemTotal = calculateTotalPrice(products);
   const total = itemTotal; // TODO: fixme
   const handling = 0; // TODO: fixme
-  const taxTotal = 0; // TODO: fixme
+  const taxTotal = calculateTotalTax(products); // TODO: fixme
   const shippingCost = 0; // TODO: fixme
   const discount = 0; // TODO: fixme
   const finalDescription = "some products"; // TODO: fixme
@@ -120,27 +120,27 @@ const sendProductsToPaypal = (products, shipping) => {
           custom_id: "CUST-HighFashions",
           soft_descriptor: "HighFashions",
           amount: {
-            currency_code: "SEK",
-            value: total,
+            currency_code: CURRENCY,
+            value: total + taxTotal,
             breakdown: {
               item_total: {
-                currency_code: "SEK",
+                currency_code: CURRENCY,
                 value: itemTotal,
               },
               shipping: {
-                currency_code: "SEK",
+                currency_code: CURRENCY,
                 value: shippingCost,
               },
               handling: {
-                currency_code: "SEK",
+                currency_code: CURRENCY,
                 value: handling,
               },
               tax_total: {
-                currency_code: "SEK",
+                currency_code: CURRENCY,
                 value: taxTotal,
               },
               shipping_discount: {
-                currency_code: "SEK",
+                currency_code: CURRENCY,
                 value: discount,
               },
             },

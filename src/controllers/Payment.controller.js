@@ -20,12 +20,9 @@ const createOrder = async (request, response) => {
   shipping.countryCode = 'SE';
   shipping.fullName = `${shipping.firstname} ${shipping.lastname}`;
 
-
-  console.log('apa', shipping);
-
   UserModel.findById({ _id: userId })
     .then(async (user) => {
-      const products = await ProductModel.find({ _id: [productIds] });
+      const products = await ProductModel.find({ _id: productIds.split(',') });
 
       PaypalService.sendProductsToPaypal(products, shipping).then(async paypalOrder => {
 

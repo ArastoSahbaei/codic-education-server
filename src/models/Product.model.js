@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
+import { CURRENCY, getTax } from '../payments.js';
 
 const productSchema = Schema({
 	title: {
@@ -34,12 +35,12 @@ const productSchema = Schema({
 export const productToPaypalModel = (product) => ({
 	reference_id: product._id,
 	"unit_amount": {
-		"currency_code": "SEK",
+		"currency_code": CURRENCY,
 		"value": product.price
 	},
   "tax": {
-			"currency_code": "SEK",
-			"value": "0.00" // TODO: fixme
+			"currency_code": CURRENCY,
+			"value": getTax(product)
 	},
 	sku: product._id,
 	name: product.name || "Unknown",
