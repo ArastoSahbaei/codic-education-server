@@ -235,6 +235,7 @@ const retrieveLostAccount = async (request, response) => {
 			resetPasswordExpires: Date.now() + 3600000,
 		})
 		Configurations.sendEmail(databaseResponse, token)
+		response.status(StatusCode.CREATED).send({ message: 'ok' })
 	}
 }
 
