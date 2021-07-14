@@ -93,6 +93,7 @@ const registerNewUser = async (request, response, next) => {
 			const hashedPassword = await bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
 			const user = await new UserModel({
 				username: request.body.username,
+				email: request.body.email,
 				password: hashedPassword,
 				name: request.body.name,
 				favouriteProducts: []
@@ -219,7 +220,7 @@ const updatePassword = (request, response) => {
 	})(request, response, next)
 }
 
-const forgotPassword = async (request, response) => {
+const retrieveLostAccount = async (request, response) => {
 	if (request.body.email === '') {
 		response.status(StatusCode.BAD_REQUEST).send('email required')
 	}
@@ -278,7 +279,7 @@ export default {
 	updateUser,
 	deleteUserWithID,
 	updatePassword,
-	forgotPassword,
+	retrieveLostAccount,
 	resetPassword,
 	updateCart,
 	updateFavouriteProducts

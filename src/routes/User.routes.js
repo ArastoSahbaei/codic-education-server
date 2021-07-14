@@ -10,7 +10,7 @@ const routes = application => {
 	application.get('/searchuser', UserController.getUserWithQuery)
 	application.put('/user/:userId', UserController.updateUser)
 	application.delete('/user/:userId', UserController.deleteUserWithID)
-	application.post('/forgotpassword', UserController.forgotPassword)
+	application.post('/forgotpassword', UserController.retrieveLostAccount)
 	application.put('/updatepassword', UserController.updatePassword)
 	application.put('/resetpassword', UserController.resetPassword)
 	application.put('/shoppingcart/add', UserController.updateCart)
