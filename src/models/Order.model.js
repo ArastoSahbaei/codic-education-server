@@ -19,6 +19,10 @@ const orderSchema = Schema(
       type: String,
       require: false,
     },
+    paypalToken: {
+      type: String,
+      require: false
+    },
     price: {
       type: Number,
       require: true,
