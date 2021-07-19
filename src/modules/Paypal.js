@@ -1,6 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import { calculateTotalPrice } from "../functions/functions.js";
 import { productToPaypalModel } from "../models/Product.model.js";
+import OrderModel from "../models/Order.model.js";
 
 // Creating an environment
 const clientId = process.env.PAYPAL_CLIENT_ID;
@@ -25,13 +26,13 @@ const authorizeOrder = (orderID) => {
 				authorization.result.purchase_units[0].payments.authorizations[0].id;
 
 			const existingOrder = await OrderModel.findOne({
-				paypalOrderId: orderId,
+				paypalOrderId: orderID,
 			});
 
 			if (existingOrder) {
 				existingOrder.paypalAuthorizeId = authorizationID;
 				await existingOrder.save();
-				captureOrder(orderId)
+				captureOrder(orderID)
 					.then((order) => {
 						resolve(order);
 					})
@@ -105,7 +106,7 @@ const sendProductsToPaypal = (products, shipping, order) => {
 		request.requestBody({
 			intent: "AUTHORIZE",
 			application_context: {
-				return_url: "http://localhost:3001" + `/payment/authorize-order`,
+				return_url: "http://localhost:3001" + `/payment/authorize-order?orderId=${order._id}`,
 				cancel_url: "http://localhost:3001" + `/payment/cancel`,
 				locale: "en-US",
 				landing_page: "BILLING",

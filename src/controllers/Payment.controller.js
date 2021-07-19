@@ -41,8 +41,7 @@ const createOrder = async (request, response) => {
 				const redirectLink = links.find(link => link.rel === "approve");
 				const href = redirectLink && redirectLink.href;
 
-
-				order.paypalOrderId = paypalOrder.orderID;
+				order.paypalOrderId = paypalOrder.result.id;
 
 				await order.save();
         console.log('order saved', order);
@@ -84,8 +83,11 @@ const captureOrder = async (request, response) => {
 const authorizeOrder = async (request, response) => {
   console.log('Running authorizeOrder');
 
+  console.log('query', request.query);
+  console.log('body', request.body);
+
 	// 2a. Get the order ID from the request body
-	const orderID = request.query.codicOrderID;
+	const orderID = request.query.orderId;
   const existingOrder = await OrderModel.findOne({
 		_id: orderID,
 	});
@@ -98,7 +100,7 @@ const authorizeOrder = async (request, response) => {
   console.log('paypalOrderId', paypalOrderId);
 
 	PaypalService.authorizeOrder(paypalOrderId).then(order => {
-		response.send({ '_id': order._id })
+		response.redirect(`http://localhost:3000/order-finished?orderId=${order._id}`); // TODO: save in configuration or something
 	}).catch(error => {
 		console.log(error)
 		response
