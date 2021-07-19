@@ -7,7 +7,7 @@ const getOrderById = async (request, response) => {
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
-			message: 'Error occured while trying to retrieve user with ID: ' + request.params.userId,
+			message: 'Error occured while trying to retrieve order with ID: ' + request.params.userId,
 			error: error.message
 		})
 	}
