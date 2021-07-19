@@ -43,7 +43,6 @@ const buildFrontendInProduction = () => {
 }
 
 const sendEmail = async (databaseResponse, token) => {
-
 	const transporter = nodemailer.createTransport({
 		host: 'smtp.gmail.com',
 		port: 465,
@@ -78,6 +77,40 @@ const sendEmail = async (databaseResponse, token) => {
 			response.status(StatusCode.OK).send(response)
 		}
 	})
+}
+
+const sendContactEmail = async (name, email, subject, message) => {
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		auth: {
+			type: 'OAuth2',
+			user: EMAIL,
+			clientId: CLIENT_ID,
+			clientSecret: CLIENT_SECRET,
+			refreshToken: REFRESH_TOKEN
+		}
+	})
+
+	const mailOptions = {
+		from: 'developmentwitharre@gmail.com',
+		to: 'developmentwitharre@gmail.com',
+		subject: `${subject}`,
+		text:
+			`Name: ${name}\n\n`
+			+ `Email: ${email}\n\n`
+			+ `Message: ${message}\n\n`
+	}
+
+	transporter.sendMail(mailOptions, (error, response) => {
+		if (error) {
+			console.error('there was an error: ', error)
+		} else {
+			console.log('here is the response: ', response)
+			response.status(StatusCode.OK).send(response)
+		}
+	})
 
 }
 
@@ -85,5 +118,6 @@ export default {
 	connectToDatabase,
 	connectToPort,
 	sendEmail,
-	buildFrontendInProduction
+	buildFrontendInProduction,
+	sendContactEmail
 }

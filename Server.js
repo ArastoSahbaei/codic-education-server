@@ -12,6 +12,7 @@ import ProductRoutes from './src/routes/Product.routes.js'
 import ProductCategoryRoutes from './src/routes/ProductCategory.routes.js'
 import ProductBrandRoutes from './src/routes/ProductBrand.routes.js'
 import ShoppingCartRoutes from './src/routes/ShoppingCart.routes.js'
+import ContactRoutes from './src/routes/Contact.routes.js'
 import NewsLetterSubscriptionRoutes from './src/routes/NewsLetterSubscription.routes.js'
 import passportConfig from './configurations/passport-config.js'
 
@@ -28,6 +29,7 @@ passportConfig.login()
 UserRoutes.routes(application)
 PaymentRoutes.routes(application)
 ProductRoutes.routes(application)
+ContactRoutes.routes(application)
 ProductCategoryRoutes.routes(application)
 ProductBrandRoutes.routes(application)
 ShoppingCartRoutes.routes(application)
