@@ -1,6 +1,7 @@
 import paypal from "@paypal/checkout-server-sdk";
 import { calculateTotalPrice } from "../functions/functions.js";
 import { productToPaypalModel } from "../models/Product.model.js";
+import OrderModel from "../models/Order.model.js";
 
 // Creating an environment
 const clientId = process.env.PAYPAL_CLIENT_ID;
@@ -11,7 +12,9 @@ const environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
 const client = new paypal.core.PayPalHttpClient(environment);
 
 const authorizeOrder = (orderID) => {
-	const request = new paypal.orders.OrdersCaptureRequest(orderID);
+  console.log('Running authorizeOrder');
+  paypal.orders
+	const request = new paypal.orders.OrdersAuthorizeRequest(orderID);
 	const client = new paypal.core.PayPalHttpClient(environment);
 
 	return new Promise(async (resolve, reject) => {
@@ -23,13 +26,13 @@ const authorizeOrder = (orderID) => {
 				authorization.result.purchase_units[0].payments.authorizations[0].id;
 
 			const existingOrder = await OrderModel.findOne({
-				paypalOrderId: orderId,
+				paypalOrderId: orderID,
 			});
 
 			if (existingOrder) {
 				existingOrder.paypalAuthorizeId = authorizationID;
 				await existingOrder.save();
-				captureOrder(orderId)
+				captureOrder(orderID)
 					.then((order) => {
 						resolve(order);
 					})
@@ -51,6 +54,7 @@ const authorizeOrder = (orderID) => {
 };
 
 const captureOrder = (orderID) => {
+  console.log('Running captureOrder');
 	const request = new paypal.orders.OrdersCaptureRequest(orderID);
 	const client = new paypal.core.PayPalHttpClient(environment);
 
@@ -83,7 +87,8 @@ const captureOrder = (orderID) => {
 	});
 };
 
-const sendProductsToPaypal = (products, shipping) => {
+const sendProductsToPaypal = (products, shipping, order) => {
+  console.log('Running sendProductsToPaypal');
 	const itemTotal = calculateTotalPrice(products);
 	const total = itemTotal; // TODO: fixme
 	const handling = 0; // TODO: fixme
@@ -101,8 +106,8 @@ const sendProductsToPaypal = (products, shipping) => {
 		request.requestBody({
 			intent: "AUTHORIZE",
 			application_context: {
-				return_url: "http://localhost:3001" + "/payment/authorize-order",
-				cancel_url: "http://localhost:3001" + "/payment/cancel",
+				return_url: "http://localhost:3001" + `/payment/authorize-order?orderId=${order._id}`,
+				cancel_url: "http://localhost:3001" + `/payment/cancel`,
 				locale: "en-US",
 				landing_page: "BILLING",
 				shipping_preference: "SET_PROVIDED_ADDRESS",
@@ -114,11 +119,11 @@ const sendProductsToPaypal = (products, shipping) => {
 			},
 			purchase_units: [
 				{
-					reference_id: "PUHF",
-					description: "Sporting Goods",
+					reference_id: order._id,
+					description: "Codic order",
 
-					custom_id: "CUST-HighFashions",
-					soft_descriptor: "HighFashions",
+					custom_id: order._id,
+					soft_descriptor: "codicOrder",
 					amount: {
 						currency_code: "SEK",
 						value: total,
@@ -164,10 +169,10 @@ const sendProductsToPaypal = (products, shipping) => {
 			],
 		});
 
-		let order;
+		let paypalOrder;
 		try {
-			order = await client.execute(request);
-			resolve(order);
+			paypalOrder = await client.execute(request);
+			resolve(paypalOrder);
 		} catch (error) {
 			console.log(error);
 			reject(error);

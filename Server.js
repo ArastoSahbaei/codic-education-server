@@ -8,6 +8,7 @@ import Configuration from './configurations/Configurations.js'
 import Middlewares from './src/middlewares/Middlewares.js'
 import UserRoutes from './src/routes/User.routes.js'
 import PaymentRoutes from './src/routes/Payment.routes.js'
+import OrderRoutes from './src/routes/Order.routes.js'
 import ProductRoutes from './src/routes/Product.routes.js'
 import ProductCategoryRoutes from './src/routes/ProductCategory.routes.js'
 import ProductBrandRoutes from './src/routes/ProductBrand.routes.js'
@@ -28,6 +29,7 @@ passportConfig.login()
 
 UserRoutes.routes(application)
 PaymentRoutes.routes(application)
+OrderRoutes.routes(application)
 ProductRoutes.routes(application)
 ContactRoutes.routes(application)
 ProductCategoryRoutes.routes(application)
