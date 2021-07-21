@@ -131,6 +131,7 @@ const getAllUsers = async (request, response) => {
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
 	}
 }
+
 const getUserByID = async (request, response) => {
 	try {
 		const databaseResponse = await (await UserModel.findOne({ _id: request.params.userId })
@@ -163,9 +164,8 @@ const getUserWithQuery = async (request, response) => {
 const updateUser = async (request, response) => {
 	try {
 		if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
-		const databaseResponse = await UserModel.find(request.params.userId, {
-			username: request.body.username,
-			password: request.body.password,
+		const databaseResponse = await UserModel.findByIdAndUpdate(request.params.userId, {
+			personalDetails: request.body.personalDetails
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
