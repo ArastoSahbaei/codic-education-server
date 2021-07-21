@@ -75,7 +75,9 @@ const login = async (request, response, next) => {
 							username: user.username,
 							id: user._id,
 							newsLetterSubscription: user.newsLetterSubscription,
-							favouriteProducts: user.favouriteProducts
+							favouriteProducts: user.favouriteProducts,
+							personalDetails: user.personalDetails,
+							accountValidation: user.accountValidation
 						})
 					})
 			})
