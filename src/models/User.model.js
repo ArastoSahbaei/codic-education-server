@@ -19,13 +19,18 @@ const userSchema = Schema({
 		index: true,
 		sparse: true
 	},
+	accountValidation: {
+		isEmailVerified: { type: Boolean, default: false },
+		isAccountDisabled: { type: Boolean, default: false },
+		isAccountBanned: { type: Boolean, default: false }
+	},
 	password: { type: String, require: true },
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	personalDetails: {
 		firstName: { type: String, default: '' },
 		lastName: { type: String, default: '' },
-		gender: Boolean,
+		gender: { type: Boolean },
 		country: { type: String, default: '' },
 		adress: { type: String, default: '' },
 		secondaryAdress: { type: String, default: '' },
