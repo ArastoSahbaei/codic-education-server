@@ -165,7 +165,7 @@ const updateUser = async (request, response) => {
 		if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
 		const databaseResponse = await UserModel.find(request.params.userId, {
 			username: request.body.username,
-			password: request.body.password
+			password: request.body.password,
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
@@ -276,15 +276,15 @@ const resetPassword = async (request, response) => {
 export default {
 	testingAuthenticatedRoute,
 	login,
+	retrieveLostAccount,
+	resetPassword,
 	registerNewUser,
 	getAllUsers,
 	getUserByID,
 	getUserWithQuery,
 	updateUser,
-	deleteUserWithID,
 	updatePassword,
-	retrieveLostAccount,
-	resetPassword,
 	updateCart,
-	updateFavouriteProducts
+	updateFavouriteProducts,
+	deleteUserWithID,
 }
