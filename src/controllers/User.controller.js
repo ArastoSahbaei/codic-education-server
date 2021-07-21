@@ -74,6 +74,7 @@ const login = async (request, response, next) => {
 							token,
 							username: user.username,
 							id: user._id,
+							email: user.email,
 							newsLetterSubscription: user.newsLetterSubscription,
 							favouriteProducts: user.favouriteProducts,
 							personalDetails: user.personalDetails,
