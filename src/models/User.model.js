@@ -34,9 +34,9 @@ const userSchema = Schema({
 		country: { type: String, default: '' },
 		adress: { type: String, default: '' },
 		secondaryAdress: { type: String, default: '' },
-		ZIPcode: { type: String, default: '' },
+		zipCode: { type: String, default: '' },
 		county: { type: String, default: '' },
-		postOrt: { type: String, default: '' },
+		postOffice: { type: String, default: '' },
 		phone: { type: String, default: '' },
 		secondaryPhone: { type: String, default: '' }
 	},
