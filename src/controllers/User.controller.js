@@ -188,39 +188,50 @@ const deleteUserWithID = async (request, response) => {
 	}
 }
 
-const updatePassword = (request, response) => {
+const updatePassword = async (request, response) => {
 	const BCRYPT_SALT_ROUNDS = 12
-	passport.authenticate('jwt', { session: false }, (error, user, info) => {
-		if (error) { console.error(error) }
-		if (info !== undefined) {
-			console.error(info.message)
-			response.status(403).send(info.message)
-		} else {
-			UserModel.findOne({
-				username: request.body.username,
-			}).then((userInfo) => {
-				if (userInfo != null) {
-					console.log('user found in db')
-					bcrypt
-						.hash(request.body.password, BCRYPT_SALT_ROUNDS)
-						.then((hashedPassword) => {
-							userInfo.update({
-								password: hashedPassword,
+	console.log(request.body.newPassword)
+	const hashedPassword = await bcrypt.hash(request.body.newPassword, BCRYPT_SALT_ROUNDS)
+	console.log(hashedPassword)
+	try {
+		const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
+			password: hashedPassword
+		}, { new: true })
+		response.status(StatusCode.OK).send(databaseResponse)
+	} catch (error) {
+
+	}
+	/* 	passport.authenticate('jwt', { session: false }, (error, user, info) => {
+			if (error) { console.error(error) }
+			if (info !== undefined) {
+				console.error(info.message)
+				response.status(403).send(info.message)
+			} else {
+				UserModel.findOne({
+					username: request.body.username,
+				}).then((userInfo) => {
+					if (userInfo != null) {
+						console.log('user found in db')
+						bcrypt
+							.hash(request.body.password, BCRYPT_SALT_ROUNDS)
+							.then((hashedPassword) => {
+								userInfo.update({
+									password: hashedPassword,
+								})
 							})
-						})
-						.then(() => {
-							console.log('password updated')
-							response
-								.status(200)
-								.send({ auth: true, message: 'password updated' })
-						})
-				} else {
-					console.error('no user exists in db to update')
-					response.status(404).json('no user exists in db to update')
-				}
-			})
-		}
-	})(request, response, next)
+							.then(() => {
+								console.log('password updated')
+								response
+									.status(200)
+									.send({ auth: true, message: 'password updated' })
+							})
+					} else {
+						console.error('no user exists in db to update')
+						response.status(404).json('no user exists in db to update')
+					}
+				})
+			}
+		})(request, response, next) */
 }
 
 const retrieveLostAccount = async (request, response) => {
