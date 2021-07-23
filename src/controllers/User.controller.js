@@ -68,12 +68,12 @@ const login = async (request, response, next) => {
 					.populate({ path: 'shoppingCart', populate: { path: 'products' } })
 					.then(user => {
 						const token = jwt.sign({ id: user._id }, 'jwtSecret.secret', { expiresIn: 60 * 60 })
-						response.status(200).send({
+						response.status(StatusCode.OK).send({
 							shoppingCart: user.shoppingCart,
 							authenticated: true,
 							token,
 							username: user.username,
-							id: user._id,
+							_id: user._id,
 							email: user.email,
 							newsLetterSubscription: user.newsLetterSubscription,
 							favouriteProducts: user.favouriteProducts,
