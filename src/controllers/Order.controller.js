@@ -3,7 +3,7 @@ import StatusCode from '../../configurations/StatusCode.js'
 
 const getOrderById = async (request, response) => {
 	try {
-		const databaseResponse = await OrderModel.findOne({ _id: request.params.orderId })
+		const databaseResponse = await OrderModel.findOne({ _id: request.params.orderId }).populate('products');
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({

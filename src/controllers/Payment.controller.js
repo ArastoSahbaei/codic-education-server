@@ -23,7 +23,8 @@ const createOrder = async (request, response) => {
 
 	UserModel.findById({ _id: userId })
 		.then(async (user) => {
-			const products = await ProductModel.find({ _id: [productIds] });
+      const ids = productIds.split(',');
+      const products = await Promise.all(ids.map(id => ProductModel.findOne({ _id: id }) ));
 
       const order = await new OrderModel({
 					products: products,
@@ -68,9 +69,11 @@ const createOrder = async (request, response) => {
 
 
 const captureOrder = async (request, response) => {
-	const orderID = request.query.orderID;
-	PaypalService.captureOrder(orderID).then(order => {
-		response.send({ '_id': order._id })
+	const orderID = request.query.orderId;
+	PaypalService.captureOrder(orderID).then(data => {
+    const { existingOrder, link } = data;
+		//response.send({ '_id': order._id })
+		response.redirect(`http://localhost:3000/order-finished?orderId=${existingOrder._id}`); // TODO: save in configuration or something
 	}).catch(error => {
 		console.log(error)
 		response
@@ -99,8 +102,11 @@ const authorizeOrder = async (request, response) => {
 
   console.log('paypalOrderId', paypalOrderId);
 
-	PaypalService.authorizeOrder(paypalOrderId).then(order => {
-		response.redirect(`http://localhost:3000/order-finished?orderId=${order._id}`); // TODO: save in configuration or something
+	PaypalService.authorizeOrder(paypalOrderId).then(data => {
+    const { existingOrder, link } = data;
+    console.log(link);
+		 //response.redirect(link);
+		response.redirect(`http://localhost:3000/order-finished?orderId=${existingOrder._id}`); // TODO: save in configuration or something
 	}).catch(error => {
 		console.log(error)
 		response
