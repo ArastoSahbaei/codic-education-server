@@ -25,10 +25,10 @@ const getAllNewsLetterSubscriptions = async (request, response) => {
 	}
 }
 
-const unsubscribeNewsLetter = async (request, response) => {
+const updateNewsLetterSubscription = async (request, response) => {
 	try {
 		const databaseResponse = await NewsLetterSubscriptionModel.findByIdAndUpdate(request.params.newsLetterId, {
-			receiveNewsLetters: false
+			receiveNewsLetters: request.body.receiveNewsLetters
 		}, { new: true })
 		console.log(request.params.newsLetterId)
 		response.status(StatusCode.OK).send(databaseResponse)
@@ -40,5 +40,6 @@ const unsubscribeNewsLetter = async (request, response) => {
 export default {
 	addNewsLetterSubscription,
 	getAllNewsLetterSubscriptions,
-	unsubscribeNewsLetter
+	updateNewsLetterSubscription
 }
+
