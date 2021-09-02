@@ -18,7 +18,7 @@ const newsLetterSubscription = Schema({
 		/* required: true */
 	},
 	receiveNewsLetters: {
-		type: String,
+		type: Boolean,
 		required: true
 	}
 }, { timestamps: true })
