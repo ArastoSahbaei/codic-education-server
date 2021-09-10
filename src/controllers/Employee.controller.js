@@ -5,6 +5,7 @@ const createEmployee = async (request, response) => {
     const employee = await new EmployeeModel({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
+        dateOfBirth: request.body.dateOfBirth,
         email: request.body.email,
         mobile: request.body.mobile
     })
@@ -32,6 +33,7 @@ const updateEmployee = async (request, response) => {
         const databaseResponse = await EmployeeModel.findByIdAndUpdate(request.params.employeeId, {
             firstName: request.body.firstName,
             lastName: request.body.lastName,
+            dateOfBirth: request.body.dateOfBirth,
             email: request.body.email,
             mobile: request.body.mobile
         }, {new: true})

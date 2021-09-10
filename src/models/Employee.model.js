@@ -10,6 +10,9 @@ const employeeSchema = Schema({
         type: String,
         required: true
     },
+    dateOfBirth: {
+        type: Date
+    },
     email: {
         type: String
     },
