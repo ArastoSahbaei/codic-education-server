@@ -2,7 +2,6 @@ import CareerModel from "../models/Career.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
 
 const createJob = async (request, response) => {
-    console.log(request.body);
     const job = new CareerModel({
         title: request.body.title,
         description: request.body.description,

@@ -1,10 +1,7 @@
 import mongoose from 'mongoose'
-
 const { Schema } = mongoose
 
-
 const careerSchema = Schema({
-
     title: {
         type: String,
         required: true,
