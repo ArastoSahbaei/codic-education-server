@@ -21,7 +21,8 @@ const employeeSchema = Schema({
     },
     employeeInformation: {
         startEmployeeDate: Date,
-        lastEmployeeDate: Date
+        lastEmployeeDate: Date,
+        isEmploymentActive: Boolean
     }
 
 }, { timestamps: true })

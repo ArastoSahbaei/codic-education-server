@@ -16,7 +16,6 @@ const createEmployee = async (request, response) => {
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
     }
-
 }
 
 const getAllEmployees = async (request, response) => {
@@ -50,11 +49,11 @@ const updateEmployee = async (request, response) => {
 
 const deleteEmployeeWithID = async (request, response) => {
     try {
-        const databaseResponse = await EmployeeModel.findByIdAndDelete(request.params.employeeId)
+        await EmployeeModel.findByIdAndDelete(request.params.employeeId)
         response.status(StatusCode.OK).send({ message: `Sucessfully deleted the employee with ID: ${request.params.employeeId}` })
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
-            message: `Error occured while trying to delete employee with name ${response.firstName}  ${respone.lastName} the ID: ${request.params.employeeId}`,
+            message: `Error occured while trying to delete employee with ID: ${request.params.employeeId}`,
             error: error.message
         })
     }
