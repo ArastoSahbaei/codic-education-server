@@ -1,13 +1,14 @@
-import EmployeeModel from "../models/Employee.model.js";
-import StatusCode from "../../configurations/StatusCode.js";
+import EmployeeModel from "../models/Employee.model.js"
+import StatusCode from "../../configurations/StatusCode.js"
 
 const createEmployee = async (request, response) => {
-    const employee = await new EmployeeModel({
+    const employee = new EmployeeModel({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
         dateOfBirth: request.body.dateOfBirth,
         email: request.body.email,
-        mobile: request.body.mobile
+        mobile: request.body.mobile,
+        employeeInformation: request.body.employeeInformation
     })
     try {
         const databaseResponse = await employee.save()
@@ -15,7 +16,7 @@ const createEmployee = async (request, response) => {
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
     }
-    
+
 }
 
 const getAllEmployees = async (request, response) => {
@@ -35,30 +36,31 @@ const updateEmployee = async (request, response) => {
             lastName: request.body.lastName,
             dateOfBirth: request.body.dateOfBirth,
             email: request.body.email,
-            mobile: request.body.mobile
-        }, {new: true})
+            mobile: request.body.mobile,
+            employeeInformation: request.body.employeeInformation
+        }, { new: true })
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
-			message: 'Error occured while trying to update values of the employee with ID: ' + request.params.employeeId,
-			error: error.message
+            message: 'Error occured while trying to update values of the employee with ID: ' + request.params.employeeId,
+            error: error.message
         })
     }
 }
 
 const deleteEmployeeWithID = async (request, response) => {
-	try {
-		const databaseResponse = await EmployeeModel.findByIdAndDelete(request.params.employeeId)
-		response.status(StatusCode.OK).send({ message: `Sucessfully deleted the employee with ID: ${request.params.employeeId}`})
-	} catch (error) {
-		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
-			message: `Error occured while trying to delete employee with name ${response.firstName}  ${respone.lastName} the ID: ${request.params.employeeId}`,
-			error: error.message
-		})
-	}
+    try {
+        const databaseResponse = await EmployeeModel.findByIdAndDelete(request.params.employeeId)
+        response.status(StatusCode.OK).send({ message: `Sucessfully deleted the employee with ID: ${request.params.employeeId}` })
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
+            message: `Error occured while trying to delete employee with name ${response.firstName}  ${respone.lastName} the ID: ${request.params.employeeId}`,
+            error: error.message
+        })
+    }
 }
 
-export default{
+export default {
     createEmployee,
     getAllEmployees,
     updateEmployee,

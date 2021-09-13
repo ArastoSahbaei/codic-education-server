@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import mongoose from 'mongoose'
+const { Schema } = mongoose
 
 const employeeSchema = Schema({
     firstName: {
@@ -18,8 +18,13 @@ const employeeSchema = Schema({
     },
     mobile: {
         type: String
+    },
+    employeeInformation: {
+        startEmployeeDate: Date,
+        lastEmployeeDate: Date
     }
-}, {timestamps: true});
+
+}, { timestamps: true })
 
 const EmployeeModel = mongoose.model('employee', employeeSchema)
 export default EmployeeModel
