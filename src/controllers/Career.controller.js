@@ -1,4 +1,3 @@
-import { request, response } from "express";
 import CareerModel from "../models/Career.model.js";
 import StatusCode from "../../configurations/StatusCode.js";
 
