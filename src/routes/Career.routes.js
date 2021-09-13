@@ -1,4 +1,4 @@
-import CareerController from "../controllers/Career.controller.js";
+import CareerController from "../controllers/Career.controller.js"
 
 const routes = application => {
     application.post('/career', CareerController.createJob)

@@ -9,22 +9,18 @@ const careerSchema = Schema({
         type: String,
         required: true,
     },
-
     description: {
         type: String,
         required: true
     },
-
-    city: {
+    location: {
         type: String,
         required: true
     },
-
     jobType: {
         type: String,
         required: true
     },
-
     lastDate: {
         type: Date,
         required: true
