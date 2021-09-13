@@ -5,5 +5,6 @@ const routes = application => {
     application.get('/career', CareerController.getAllJobs)
     application.get('/career/:jobId', CareerController.getJobByID)
     application.put('/career/:jobId', CareerController.updateJob)
+    application.delete('/career/:jobId', CareerController.deleteJob)
 }
 export default { routes }

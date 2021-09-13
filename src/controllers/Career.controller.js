@@ -30,7 +30,10 @@ const getJobByID = async (request, response) => {
         const databaseResponse = await CareerModel.findOne({ _id: request.params.jobId })
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
-        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: 'no job with that id' })
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
+            message: 'Error occured while trying to retrieve job with ID: ' + request.params.jobId,
+            error: error.message
+        })
 
     }
 
@@ -42,13 +45,24 @@ const getAllJobs = async (request, response) => {
         response.status(StatusCode.OK).send(databaseResponse)
 
     } catch (error) {
-        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: 'no jobs available' + request.params.jobId })
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
 
     }
 
 }
 
 const deleteJob = async (request, response) => {
+    try {
+        const databaseResponse = await CareerModel.findByIdAndDelete(request.params.jobId)
+        response.status(StatusCode.OK).send({ message: `Successfully deleted job`, data: databaseResponse })
+
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
+            message: `Error occured while trying to delete job with the ID: ${request.params.jobId}`,
+            error: error.message
+        })
+
+    }
 
 }
 
@@ -77,6 +91,7 @@ const updateJob = async (request, response) => {
 export default {
     createJob,
     getAllJobs,
-    getJobByID, 
-    updateJob
+    getJobByID,
+    updateJob,
+    deleteJob
 }
