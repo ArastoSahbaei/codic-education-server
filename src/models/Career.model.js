@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
 
-const {Schema} = mongoose
+const { Schema } = mongoose
 
 
-const careerSchema = Schema ({
+const careerSchema = Schema({
 
-    title:{
+    title: {
         type: String,
-        require: true, 
+        require: true,
     },
 
     description: {
@@ -15,21 +15,21 @@ const careerSchema = Schema ({
         require: true
     },
 
-    city:{
+    city: {
         type: String,
         require: true
     },
 
-    jobType:{ 
+    jobType: {
         type: String,
         require: true
     },
 
-    lastDate:{
+    lastDate: {
         type: Date,
         require: true
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 const CareerModel = mongoose.model('career', careerSchema)
 export default CareerModel
