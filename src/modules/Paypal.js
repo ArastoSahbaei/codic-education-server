@@ -20,6 +20,13 @@ const authorizeOrder = (orderID) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const authorization = await client.execute(request);
+      console.log('AUTH', authorization);
+      console.log(authorization.result);
+      console.log(authorization.result.links);
+
+      const links = authorization.result.links;
+      const link = links.find(l => l.rel === "self");
+      const href = link ? link.href : null;
 
 			// 4. Save the authorization ID to your database
 			const authorizationID =
@@ -32,15 +39,15 @@ const authorizeOrder = (orderID) => {
 			if (existingOrder) {
 				existingOrder.paypalAuthorizeId = authorizationID;
 				await existingOrder.save();
-				captureOrder(orderID)
-					.then((order) => {
-						resolve(order);
+				/*captureOrder(orderID)
+					.then((data) => {
+						resolve(data);
 					})
 					.catch((error) => {
 						console.log(error);
 						reject(error);
-					});
-				resolve(existingOrder);
+					});*/
+				resolve({ existingOrder, link: href});
 			} else {
 				const error = `Order with paypalOrderId ${orderID} does not exist.`;
 				console.log(error);
@@ -53,32 +60,36 @@ const authorizeOrder = (orderID) => {
 	});
 };
 
-const captureOrder = (orderID) => {
+const captureOrder = async (orderID) => {
+  const existingOrder = await OrderModel.findOne({
+		_id: orderID,
+	});
+
+  if (!existingOrder) {
+    const error = `Order with paypalOrderId ${orderID} does not exist.`;
+		console.log(error);
+		throw new Error(error);
+  }
+
   console.log('Running captureOrder');
-	const request = new paypal.orders.OrdersCaptureRequest(orderID);
+	const request = new paypal.orders.OrdersCaptureRequest(existingOrder.paypalOrderId);
 	const client = new paypal.core.PayPalHttpClient(environment);
 
 	return new Promise(async (resolve, reject) => {
 		try {
 			const capture = await client.execute(request);
 
+      const links = capture.result.links;
+      const link = links.find(l => l.rel === "self");
+      const href = link ? link.href : null;
+
 			// 4. Save the capture ID to your database. Implement logic to save capture to your database for future reference.
 			const captureID =
 				capture.result.purchase_units[0].payments.captures[0].id;
 
-			const existingOrder = await OrderModel.findOne({
-				paypalOrderId: orderId,
-			});
-
-			if (existingOrder) {
-				existingOrder.paypalCaptureId = captureID;
-				await existingOrder.save();
-				resolve(existingOrder);
-			} else {
-				const error = `Order with paypalOrderId ${orderID} does not exist.`;
-				console.log(error);
-				throw new Error(error);
-			}
+			existingOrder.paypalCaptureId = captureID;
+			await existingOrder.save();
+			resolve({ existingOrder, link: href});
 			// await database.saveCaptureID(captureID);
 		} catch (error) {
 			console.log(error);
@@ -104,9 +115,9 @@ const sendProductsToPaypal = (products, shipping, order) => {
 	return new Promise(async (resolve, reject) => {
 		request.prefer("return=representation");
 		request.requestBody({
-			intent: "AUTHORIZE",
+			intent: "CAPTURE",
 			application_context: {
-				return_url: "http://localhost:3001" + `/payment/authorize-order?orderId=${order._id}`,
+				return_url: "http://localhost:3001" + `/payment/capture-order?orderId=${order._id}`,
 				cancel_url: "http://localhost:3001" + `/payment/cancel`,
 				locale: "en-US",
 				landing_page: "BILLING",
@@ -183,4 +194,5 @@ const sendProductsToPaypal = (products, shipping, order) => {
 export default {
 	sendProductsToPaypal,
 	authorizeOrder,
+  captureOrder
 };
