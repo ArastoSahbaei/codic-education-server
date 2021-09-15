@@ -5,7 +5,7 @@ import StatusCode from '../../configurations/StatusCode.js'
 
 const createProduct = async (request, response) => {
   console.log(request.body);
-	const product = await new ProductModel({
+	const product = new ProductModel({
 		title: request.body.title,
 		price: request.body.price,
 		quantity: request.body.quantity,
