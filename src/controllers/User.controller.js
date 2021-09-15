@@ -94,19 +94,19 @@ const registerNewUser = async (request, response, next) => {
 		} else {
 			const BCRYPT_SALT_ROUNDS = 12
 			const hashedPassword = await bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
-			const user = await new UserModel({
+			const user = new UserModel({
 				username: request.body.username,
 				email: request.body.email,
 				password: hashedPassword,
 				name: request.body.name,
 				favouriteProducts: []
 			})
-			const shoppingCart = await new ShoppingCartModel({
+			const shoppingCart = new ShoppingCartModel({
 				user: user._id,
 				products: request.body.products
 			})
 			await shoppingCart.save()
-			const newsLetterSubscription = await new NewsLetterSubscriptionModel({
+			const newsLetterSubscription = new NewsLetterSubscriptionModel({
 				email: request.body.email,
 				user: user._id,
 				receiveNewsLetters: request.body.receiveNewsLetters
