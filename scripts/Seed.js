@@ -17,10 +17,6 @@ const seedToDatabase = async () => {
 		})
 }
 
-
-
-
-
 export default {
     seedToDatabase
 }
