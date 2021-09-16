@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import employees from '../models/Employee.model.js'
-import fs from 'fs'
-import {employeeList} from './data/employees.js'
+import { employeeList } from './data/employees.js'
 
 mongoose.connect('mongodb://localhost/codic', {
     useNewUrlParser: true,
@@ -11,6 +10,6 @@ mongoose.connect('mongodb://localhost/codic', {
 
 employeeList.forEach(employee => {
     employees.insertMany(employee)
-    
-    
-});
+
+
+})
