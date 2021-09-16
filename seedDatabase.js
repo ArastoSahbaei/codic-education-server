@@ -1,3 +1,5 @@
 import SeedDataScripts from "./scripts/Seed.js";
+import config from './configurations/Configurations.js'
 
-SeedDataScripts.connectToDatabase()
+config.connectToDatabase()
+SeedDataScripts.seedToDatabase()
