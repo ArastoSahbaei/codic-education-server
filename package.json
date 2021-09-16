@@ -8,7 +8,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "npx nodemon Server.js",
 		"deploy": "git push heroku master",
-		"XXXheroku-postbuild": "npm run install-frontend && npm run build"
+		"XXXheroku-postbuild": "npm run install-frontend && npm run build",
+		"seedDatabase": "node ./seedDatabase.js"
 	},
 	"keywords": [
 		"RestAPI",
