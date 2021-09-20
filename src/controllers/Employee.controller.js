@@ -1,6 +1,17 @@
 import EmployeeModel from "../models/Employee.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
 
+const fileSizeFormatter = (bytes, decimal) => {
+    if (bytes === 0) {
+        return '0 bytes'
+    }
+    const dm = decimal || 2
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB']
+    const index = Math.floor(Math.log(bytes) / Math.log(1000))
+    return parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + ' ' + sizes[index]
+}
+
+
 const createEmployee = async (request, response) => {
     const employee = new EmployeeModel({
         firstName: request.body.firstName,
@@ -9,6 +20,7 @@ const createEmployee = async (request, response) => {
         email: request.body.email,
         mobile: request.body.mobile,
         employeeInformation: request.body.employeeInformation
+        
     })
     try {
         const databaseResponse = await employee.save()
@@ -59,9 +71,27 @@ const deleteEmployeeWithID = async (request, response) => {
     }
 }
 
+const uploadEmployeeAvatar = async (request, response) => {
+    try {
+        console.log('HÄR BÖRJAT fILEN' + request.file)
+        const databaseResponse = await EmployeeModel.findByIdAndUpdate('61487bb1aad45e2a584ac134', {
+            image: {fileName: request.file.originalname,
+            filePath: request.file.path,
+            fileType: request.file.mimetype,
+            fileSize: fileSizeFormatter(request.file.size, 2)}
+        }, { new: true })
+        await databaseResponse.save()
+        response.json({ message: "Successfully uploaded files" });
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export default {
     createEmployee,
     getAllEmployees,
     updateEmployee,
-    deleteEmployeeWithID
+    deleteEmployeeWithID,
+    uploadEmployeeAvatar
 }
