@@ -47,7 +47,7 @@ const userSchema = Schema({
 	shoppingCart: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'shoppingcart',
-		required: true
+		//required: true
 	},
 	newsLetterSubscription: {
 		type: mongoose.Schema.Types.ObjectId,

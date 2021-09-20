@@ -5,7 +5,7 @@ const shoppingCart = Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user',
-		required: true
+		//required: true
 	},
 	products: [{
 		type: mongoose.Schema.Types.ObjectId,

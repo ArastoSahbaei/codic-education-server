@@ -6,7 +6,7 @@ const newsLetterSubscription = Schema({
 		type: String,
 		unique: true,
 		allowNull: false,
-		required: true,
+		//required: true,
 		lowercase: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid'],
 		index: true,
