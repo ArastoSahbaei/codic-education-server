@@ -13,7 +13,7 @@ const userSchema = Schema({
 		type: String,
 		unique: true,
 		allowNull: false,
-		require: true,
+		require: true,  //required?
 		lowercase: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid'],
 		index: true,

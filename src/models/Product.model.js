@@ -18,15 +18,15 @@ const productSchema = Schema({
 	totalSold: {
 		type: Number
 	},
-	productCategoryName: {
+	productCategory: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'productcategory',
 		required: true
 	},
-	productBrandName: {
+	productBrand: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'productbrand',
-		required: true
+		//required: true
 	}
 }, { timestamps: true })
 
