@@ -1,16 +1,6 @@
 import EmployeeModel from "../models/Employee.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
-
-const fileSizeFormatter = (bytes, decimal) => {
-    if (bytes === 0) {
-        return '0 bytes'
-    }
-    const dm = decimal || 2
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB']
-    const index = Math.floor(Math.log(bytes) / Math.log(1000))
-    return parseFloat((bytes / Math.pow(1000, index)).toFixed(dm)) + ' ' + sizes[index]
-}
-
+import filesizeFormatter from "../functions/filesizeFormatter.js"
 
 const createEmployee = async (request, response) => {
     const employee = new EmployeeModel({
@@ -78,7 +68,7 @@ const uploadEmployeeAvatar = async (request, response) => {
             image: {fileName: request.file.originalname,
             filePath: request.file.path,
             fileType: request.file.mimetype,
-            fileSize: fileSizeFormatter(request.file.size, 2)}
+            fileSize: filesizeFormatter.fileSizeFormatter(request.file.size, 2)}
         }, { new: true })
         await databaseResponse.save()
         response.json({ message: "Successfully uploaded files" });
