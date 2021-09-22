@@ -27,19 +27,19 @@ const employeeSchema = Schema({
     image: {
         fileName: {
             type: String,
-            
+
         },
         filePath: {
             type: String,
-            
+
         },
         fileType: {
             type: String,
-           
+
         },
         fileSize: {
             type: String,
-            
+
         }
     }
 
