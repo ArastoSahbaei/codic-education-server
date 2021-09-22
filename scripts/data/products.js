@@ -1,6 +1,3 @@
-import productCategory from '../../src/models/ProductCategory.model.js'
-import productBrand from '../../src/models/ProductBrand.model.js'
-
 export const productList = 
 [
     {
@@ -15,6 +12,8 @@ export const productList =
 
 
     },
+
+
     // {
     //     title: 'Marcus Medina: Passionerat, erfaren och pedagogisk C# utvecklare',
     //     price: 849,
