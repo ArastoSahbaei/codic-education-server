@@ -1,21 +1,22 @@
-import EmployeeModel from '../src/models/Employee.model.js'
 import { employeeList } from './data/employees.js'
-import ProductCategoryModel from '../src/models/ProductCategory.model.js'
+import { newsLetterSubscriptionList } from './data/newLetterSubscriptions.js'
+import { careerList } from './data/careers.js'
 import {categoryList} from './data/productCategories.js'
 import {brandList} from './data/productBrands.js'
-import ProductBrandModel from '../src/models/ProductBrand.model.js'
-import CareerModel from '../src/models/Career.model.js'
-import { careerList } from './data/careers.js'
-import NewsLetterSubscriptionModel from '../src/models/NewsLetterSubscription.model.js'
-import { newsLetterSubscriptionList } from './data/newLetterSubscriptions.js'
+import EmployeeModel from '../../src/models/Employee.model.js'
+import NewsLetterSubscriptionModel from '../../src/models/NewsLetterSubscription.model.js'
+import CareerModel from '../../src/models/Career.model.js'
+import ProductCategoryModel from '../../src/models/ProductCategory.model.js'
+import ProductBrandModel from '../../src/models/ProductBrand.model.js'
 
 
-const seedToDatabase = async () => {
+
+
+export const populateDatabase = async () => {
 
 	employeeList.forEach(employee => {
 		try {
 			EmployeeModel.insertMany(employee)
-				.then(console.log(employee))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
 		}
@@ -23,7 +24,6 @@ const seedToDatabase = async () => {
 	brandList.forEach(brand => {
 		try {
 			ProductBrandModel.insertMany(brand)
-				.then(console.log(brand))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
 		}
@@ -31,7 +31,6 @@ const seedToDatabase = async () => {
 	categoryList.forEach(category => {
 		try {
 			ProductCategoryModel.insertMany(category)
-				.then(console.log(category))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
 		}
@@ -39,7 +38,6 @@ const seedToDatabase = async () => {
 	careerList.forEach(career => {
 		try {
 			CareerModel.insertMany(career)
-				.then(console.log(career))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
 		}
@@ -47,14 +45,9 @@ const seedToDatabase = async () => {
 	newsLetterSubscriptionList.forEach(newsLetterSubscription => {
 		try {
 			NewsLetterSubscriptionModel.insertMany(newsLetterSubscription)
-				.then(console.log(newsLetterSubscription))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
 		}
 	})
 
 }
-
-	export default {
-		seedToDatabase,
-	}
