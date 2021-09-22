@@ -1,4 +1,4 @@
-import employees from '../src/models/Employee.model.js'
+import EmployeeModel from '../src/models/Employee.model.js'
 import { employeeList } from './data/employees.js'
 import ProductCategoryModel from '../src/models/ProductCategory.model.js'
 import {categoryList} from './data/productCategories.js'
@@ -6,13 +6,15 @@ import {brandList} from './data/productBrands.js'
 import ProductBrandModel from '../src/models/ProductBrand.model.js'
 import CareerModel from '../src/models/Career.model.js'
 import { careerList } from './data/careers.js'
+import NewsLetterSubscriptionModel from '../src/models/NewsLetterSubscription.model.js'
+import { newsLetterSubscriptionList } from './data/newLetterSubscriptions.js'
 
 
 const seedToDatabase = async () => {
 
 	employeeList.forEach(employee => {
 		try {
-			 employees.insertMany(employee)
+			EmployeeModel.insertMany(employee)
 				.then(console.log(employee))
 		} catch (error) {
 			console.log('Error occurred when seeding data to the database')
@@ -42,6 +44,14 @@ const seedToDatabase = async () => {
 			console.log('Error occurred when seeding data to the database')
 		}
 	})	 
+	newsLetterSubscriptionList.forEach(newsLetterSubscription => {
+		try {
+			NewsLetterSubscriptionModel.insertMany(newsLetterSubscription)
+				.then(console.log(newsLetterSubscription))
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
 
 }
 
