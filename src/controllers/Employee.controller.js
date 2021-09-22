@@ -1,6 +1,7 @@
 import EmployeeModel from "../models/Employee.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
 import filesizeFormatter from "../functions/filesizeFormatter.js"
+import path from 'path'
 
 const createEmployee = async (request, response) => {
     const employee = new EmployeeModel({
@@ -63,9 +64,8 @@ const deleteEmployeeWithID = async (request, response) => {
 
 const uploadEmployeeAvatar = async (request, response) => {
     try {
-        console.log('HÄR BÖRJAT fILEN' + request.file)
-        const databaseResponse = await EmployeeModel.findByIdAndUpdate('61487bb1aad45e2a584ac134', {
-            image: {fileName: request.file.originalname,
+        const databaseResponse = await EmployeeModel.findByIdAndUpdate(request.params.employeeId, {
+            image: {fileName: request.params.employeeId + path.extname(request.file.originalname),
             filePath: request.file.path,
             fileType: request.file.mimetype,
             fileSize: filesizeFormatter.fileSizeFormatter(request.file.size, 2)}
