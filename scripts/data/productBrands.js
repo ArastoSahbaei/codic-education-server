@@ -13,11 +13,18 @@ export const brandList =
     },
     {
         productBrandName: 'Codic Consulting',
-        brandDescription: 'Codic Consulting hjälper företag runt om i Sverige med att hitta dom bästa medarbetarna',
+        brandDescription: 'Codic Consulting supplera företag runt om i Sverige med bästa medarbetarna',
         brandCountry: 'Sverige'
     },
-
-
-
+    {
+        productBrandName: 'Codic Analytics',
+        brandDescription: 'Codic Analytics hjälper företag med att analysera stora mängder data på ett smidigt och effektivt sätt',
+        brandCountry: 'Sverige'
+    },
+    {
+        productBrandName: 'Codic Creative',
+        brandDescription: 'Codic Creative är ett företag där kreavtivtet och innovation är i fokus',
+        brandCountry: 'Sverige'
+    }
     
 ]
