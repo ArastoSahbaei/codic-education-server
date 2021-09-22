@@ -26,7 +26,7 @@ const productSchema = Schema({
 	productBrand: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'productbrand',
-		//required: true
+		required: true
 	}
 }, { timestamps: true })
 
