@@ -1,4 +1,6 @@
-export const newsLetterSubscriptionList = [
+import NewsLetterSubscriptionModel from "../../../src/models/NewsLetterSubscription.model.js"
+
+export const newsLetterSubscriptionData = [
 	{
 		email: 'ac@felis.net',
 		receiveNewsLetters: true
@@ -40,3 +42,13 @@ export const newsLetterSubscriptionList = [
 		receiveNewsLetters: true
 	},
 ]
+
+export const populateNewsLetterSubscriptions = () => {
+	newsLetterSubscriptionData.forEach(newsLetterSubscription => {
+		try {
+			NewsLetterSubscriptionModel.insertMany(newsLetterSubscription)
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
+}

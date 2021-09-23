@@ -2,8 +2,7 @@ import { populateEmployees } from './data/employees.js'
 import { populateProductBrands } from './data/productBrands.js'
 import { populateProductCategories } from './data/productCategories.js'
 import { populateCareerApplications } from './data/careers.js'
-import { newsLetterSubscriptionList } from './data/newLetterSubscriptions.js'
-import NewsLetterSubscriptionModel from '../../src/models/NewsLetterSubscription.model.js'
+import { populateNewsLetterSubscriptions } from './data/newLetterSubscriptions.js'
 import Configurations from '../Configurations.js'
 import dotenv from 'dotenv'
 
@@ -12,14 +11,7 @@ export const populateDatabase = () => {
 	populateProductBrands()
 	populateProductCategories()
 	populateCareerApplications()
-	newsLetterSubscriptionList.forEach(newsLetterSubscription => {
-		try {
-			NewsLetterSubscriptionModel.insertMany(newsLetterSubscription)
-		} catch (error) {
-			console.log('Error occurred when seeding data to the database')
-		}
-	})
-
+	populateNewsLetterSubscriptions()
 }
 
 const connectToDeveloperDB = () => {
