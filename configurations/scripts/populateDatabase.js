@@ -1,4 +1,4 @@
-import {populateDatabase} from "./Populate.js";
+import { populateDatabase } from './Populate.js'
 import config from '../Configurations.js'
 import dotenv from 'dotenv'
 

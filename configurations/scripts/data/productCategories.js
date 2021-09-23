@@ -1,36 +1,35 @@
 
-export const categoryList = 
-[
-    {
-        productCategoryName: 'Utbildare',        
-    },
+export const categoryList =
+	[
+		{
+			productCategoryName: 'Utbildare',
+		},
 
-    {
-        productCategoryName: 'Utvecklare'       
+		{
+			productCategoryName: 'Utvecklare'
 
-    },
-    {
-        productCategoryName: 'Kurser'       
+		},
+		{
+			productCategoryName: 'Kurser'
 
-    },
-    {
-        productCategoryName: 'Gästföreläsare'       
+		},
+		{
+			productCategoryName: 'Gästföreläsare'
 
-    },
-    {
-        productCategoryName: 'Utbildningspaket'       
+		},
+		{
+			productCategoryName: 'Utbildningspaket'
 
-    },
-    {
-        productCategoryName: 'Kodstuga'       
+		},
+		{
+			productCategoryName: 'Kodstuga'
 
-    },
-    {
-        productCategoryName: 'Videomaterial'       
+		},
+		{
+			productCategoryName: 'Videomaterial'
 
-    },
-    {
-        productCategoryName: 'Böcker'       
-
-    }
-]
+		},
+		{
+			productCategoryName: 'Böcker'
+		}
+	]

@@ -8,8 +8,8 @@ export const employeeList =
 			tel: '00000000000',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -21,8 +21,8 @@ export const employeeList =
 			tel: '0722-921983',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -34,8 +34,8 @@ export const employeeList =
 			tel: '0730-928322',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -47,8 +47,8 @@ export const employeeList =
 			tel: '000000000',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -60,8 +60,8 @@ export const employeeList =
 			tel: '0707-562089',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -73,8 +73,8 @@ export const employeeList =
 			tel: '0738-059160',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -86,8 +86,8 @@ export const employeeList =
 			tel: '000000000',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -99,8 +99,8 @@ export const employeeList =
 			tel: '0763-937400',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -112,8 +112,8 @@ export const employeeList =
 			tel: '0701-104442',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -125,8 +125,8 @@ export const employeeList =
 			tel: '00000000',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -138,8 +138,8 @@ export const employeeList =
 			tel: '0737-654029',
 			employeeInformation: {
 				startEmployeeDate: '01-07-2018',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -151,8 +151,8 @@ export const employeeList =
 			tel: '0735-230403',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -164,8 +164,8 @@ export const employeeList =
 			tel: '0704-101822',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -177,8 +177,8 @@ export const employeeList =
 			tel: '0768-990065',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -190,8 +190,8 @@ export const employeeList =
 			tel: '0708-289728',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
@@ -203,8 +203,8 @@ export const employeeList =
 			tel: '00000000',
 			employeeInformation: {
 				startEmployeeDate: '',
-        		lastEmployeeDate: '',
-        		isEmploymentActive: true,
+				lastEmployeeDate: '',
+				isEmploymentActive: true,
 
 			}
 		},
