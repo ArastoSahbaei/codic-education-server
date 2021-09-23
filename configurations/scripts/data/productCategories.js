@@ -1,6 +1,6 @@
 import ProductCategoryModel from "../../../src/models/ProductCategory.model.js"
 
-export const categoryData =
+export const productCCategoriesData =
 	[
 		{
 			productCategoryName: 'Utbildare',
@@ -36,7 +36,7 @@ export const categoryData =
 	]
 
 export const populateProductCategories = () => {
-	categoryData.forEach(category => {
+	productCCategoriesData.forEach(category => {
 		try {
 			ProductCategoryModel.insertMany(category)
 		} catch (error) {

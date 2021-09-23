@@ -1,6 +1,6 @@
 import ProductBrandModel from '../../../src/models/ProductBrand.model.js'
 
-export const brandData =
+export const productBrandData =
 	[
 		{
 			productBrandName: 'Codic Education',
@@ -30,7 +30,7 @@ export const brandData =
 	]
 
 export const populateProductBrands = () => {
-	brandData.forEach(brand => {
+	productBrandData.forEach(brand => {
 		try {
 			ProductBrandModel.insertMany(brand)
 		} catch (error) {

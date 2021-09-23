@@ -1,8 +1,8 @@
-import { populateEmployees } from './data/employees.js'
-import { populateProductBrands } from './data/productBrands.js'
+import { populateEmployees } from './data/employeeData.js'
+import { populateProductBrands } from './data/productBrandData.js'
 import { populateProductCategories } from './data/productCategories.js'
-import { populateCareerApplications } from './data/careers.js'
-import { populateNewsLetterSubscriptions } from './data/newLetterSubscriptions.js'
+import { populateCareerApplications } from './data/careerApplicationData.js'
+import { populateNewsLetterSubscriptions } from './data/newsLetterSubscriptionData.js'
 import Configurations from '../Configurations.js'
 import dotenv from 'dotenv'
 
