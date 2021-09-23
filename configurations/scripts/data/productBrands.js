@@ -1,4 +1,6 @@
-export const brandList =
+import ProductBrandModel from '../../../src/models/ProductBrand.model.js'
+
+export const brandData =
 	[
 		{
 			productBrandName: 'Codic Education',
@@ -25,5 +27,14 @@ export const brandList =
 			brandDescription: 'Codic Creative är ett företag där kreavtivtet och innovation är i fokus',
 			brandCountry: 'Sverige'
 		}
-
 	]
+
+export const populateProductBrands = () => {
+	brandData.forEach(brand => {
+		try {
+			ProductBrandModel.insertMany(brand)
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
+}

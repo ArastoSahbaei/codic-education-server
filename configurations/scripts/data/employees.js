@@ -1,4 +1,6 @@
-export const employeeList =
+import EmployeeModel from "../../../src/models/Employee.model.js"
+
+export const employeeData =
 	[
 		{
 			img: 'https://ca.slack-edge.com/T0L99ESG4-U025GFT22ET-68d1bf989908-512',
@@ -209,3 +211,13 @@ export const employeeList =
 			}
 		},
 	]
+
+export const populateEmployees = () => {
+	employeeData.forEach(employee => {
+		try {
+			EmployeeModel.insertMany(employee)
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
+}
