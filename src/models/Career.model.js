@@ -21,7 +21,31 @@ const careerSchema = Schema({
     lastDate: {
         type: Date,
         required: true
-    }
+    },
+
+    applicants: [{
+        firstName:{
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        dateOfBirth: {
+            type: Date,
+            required: true
+        },
+        email:{
+            type: String,
+            required: true
+        },
+        phone:{
+            type: String,
+            required: true
+        }
+
+    }]
 }, { timestamps: true })
 
 const CareerModel = mongoose.model('career', careerSchema)

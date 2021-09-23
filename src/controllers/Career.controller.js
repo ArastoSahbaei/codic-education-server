@@ -1,5 +1,7 @@
 import CareerModel from "../models/Career.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
+import { request } from "chai"
+import { response } from "express"
 
 const createJob = async (request, response) => {
     const job = new CareerModel({
@@ -70,10 +72,15 @@ const updateJob = async (request, response) => {
     }
 }
 
+const createApplicant = async (request, response) => {
+
+}
+
 export default {
     createJob,
     getAllJobs,
     getJobByID,
     updateJob,
-    deleteJob
+    deleteJob,
+    createApplicant
 }
