@@ -5,21 +5,10 @@ This is the code for Codic Educations server
 ## Programs required
 MongDB - https://www.mongodb.com/try/download/community?tck=docs_server
 
-Insomnia - https://insomnia.rest/download
+Node JS
 
 
 ## Setting Up
-
-Insomnia: 
-
-1. Open insomnia
-
-2. Go to settings -> Data -> Choose Import Data from file
-
-3. Go to the application folder -> configurations -> Insomnia 
-
-4. Double click on the newest JSON file
-
 
 MongoDB Compass:
 
@@ -34,13 +23,20 @@ MongoDB Compass:
     PORT = 3001
     ENVIROMENT = DEVELOPMENT
 
+    EMAIL = x
+    CLIENT_ID = x
+    CLIENT_SECRET = x
+    REFRESH_TOKEN = x
+    PAYPAL_CLIENT_ID = x
+    PAYPAL_CLIENT_SECRET = x 
+
 4. Save
 
 5. Open MongoDB Compass
 
 6. Under New Connection -> click on the 'Connect' button
 
-7. Now you should be able to see the Codic database in your menu
+7. Now you should be able to see the database in your menu
 
 ## Install
 
@@ -55,7 +51,7 @@ npm install
 1. In the project directory you can run:
 
 ```
-npm start
+(npx) nodemone Server.js
 ```
 Runs the app in the development mode.
 
