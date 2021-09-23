@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import cors from 'cors'
 import passport from 'passport'
+import path from 'path'
 
 import Configuration from './configurations/Configurations.js'
 import Middlewares from './src/middlewares/Middlewares.js'
@@ -25,6 +26,7 @@ application.use(cors({ credentials: true }))
 application.use(express.json())
 application.use(helmet())
 application.use(morgan('common'))
+application.use('/static', express.static(path.join(process.cwd(), 'configurations')))
 
 passportConfig.registerUserini()
 passportConfig.login()
@@ -43,6 +45,9 @@ EmployeeRoutes.routes(application)
 
 application.use(Middlewares.notFound)
 application.use(Middlewares.errorHandler)
+
+
+
 
 Configuration.connectToDatabase()
 Configuration.connectToPort(application)
