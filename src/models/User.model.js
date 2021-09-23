@@ -13,7 +13,7 @@ const userSchema = Schema({
 		type: String,
 		unique: true,
 		allowNull: false,
-		require: true,  //required?
+		required: true,
 		lowercase: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid'],
 		index: true,
@@ -24,7 +24,7 @@ const userSchema = Schema({
 		isAccountDisabled: { type: Boolean, default: false },
 		isAccountBanned: { type: Boolean, default: false }
 	},
-	password: { type: String, require: true },
+	password: { type: String, required: true },
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	personalDetails: {
