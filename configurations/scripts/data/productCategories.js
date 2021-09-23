@@ -1,5 +1,6 @@
+import ProductCategoryModel from "../../../src/models/ProductCategory.model.js"
 
-export const categoryList =
+export const categoryData =
 	[
 		{
 			productCategoryName: 'Utbildare',
@@ -33,3 +34,13 @@ export const categoryList =
 			productCategoryName: 'Böcker'
 		}
 	]
+
+export const populateProductCategories = () => {
+	categoryData.forEach(category => {
+		try {
+			ProductCategoryModel.insertMany(category)
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
+}

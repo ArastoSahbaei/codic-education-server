@@ -1,4 +1,6 @@
-export const careerList =
+import CareerModel from "../../../src/models/Career.model.js"
+
+export const careerApplicationData =
 	[
 		{
 			title: 'Utbildare inom .NET',
@@ -51,3 +53,13 @@ export const careerList =
 		},
 
 	]
+
+export const populateCareerApplications = () => {
+	careerApplicationData.forEach(career => {
+		try {
+			CareerModel.insertMany(career)
+		} catch (error) {
+			console.log('Error occurred when seeding data to the database')
+		}
+	})
+}
