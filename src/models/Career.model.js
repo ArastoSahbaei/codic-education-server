@@ -24,27 +24,8 @@ const careerSchema = Schema({
     },
 
     applicants: [{
-        firstName:{
-            type: String,
-            required: true
-        },
-        lastName: {
-            type: String,
-            required: true
-        },
-        dateOfBirth: {
-            type: Date,
-            required: true
-        },
-        email:{
-            type: String,
-            required: true
-        },
-        phone:{
-            type: String,
-            required: true
-        }
-
+        type: Schema.Types.ObjectId,
+		ref: 'applicant',
     }]
 }, { timestamps: true })
 
