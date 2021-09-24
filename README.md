@@ -5,8 +5,10 @@ This is the code for Codic Educations server
 ## Programs required
 MongDB - https://www.mongodb.com/try/download/community?tck=docs_server
 
-Node JS
+Node JS - https://nodejs.org/en/download/
 
+## Recommened programs
+Insomnia - https://insomnia.rest/download
 
 ## Setting Up
 
@@ -51,7 +53,13 @@ npm install
 1. In the project directory you can run:
 
 ```
-(npx) nodemone Server.js
+nodemone Server.js
+```
+
+or
+
+```
+npx nodemone Server.js
 ```
 Runs the app in the development mode.
 
@@ -59,5 +67,5 @@ Runs the app in the development mode.
 
 PRs accepted from contributors.
 
-Do not push to master! Always create a new branch that you can commit and push to.
+You cannot push to master. The master branch is locked during development so you will need to create a new branch that you can commit and push to.
 After pushing your commits to your branch, you can create a PR.
