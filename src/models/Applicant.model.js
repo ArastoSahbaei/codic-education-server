@@ -19,11 +19,6 @@ const applicant = Schema({
         required: true
     },
 
-
-
-
-
-
 }, { timestamps: true })
 
 const ApplicantModel = mongoose.model('applicant', applicantScema)
