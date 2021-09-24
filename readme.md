@@ -7,7 +7,6 @@ MongDB - https://www.mongodb.com/try/download/community?tck=docs_server
 
 Node JS - https://nodejs.org/en/download/
 
-
 ## Recommened programs
 Insomnia - https://insomnia.rest/download
 
@@ -22,8 +21,8 @@ MongoDB Compass:
 3. insert the following code:
 
     DEV_DATABASE_URL = mongodb://localhost/codic
-    PROD_DATABASE_URL = x
-    PORT = x
+    PROD_DATABASE_URL = TBD
+    PORT = 3001
     ENVIROMENT = DEVELOPMENT
 
     EMAIL = x
