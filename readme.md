@@ -7,6 +7,7 @@ MongDB - https://www.mongodb.com/try/download/community?tck=docs_server
 
 Node JS - https://nodejs.org/en/download/
 
+
 ## Recommened programs
 Insomnia - https://insomnia.rest/download
 
@@ -21,8 +22,8 @@ MongoDB Compass:
 3. insert the following code:
 
     DEV_DATABASE_URL = mongodb://localhost/codic
-    PROD_DATABASE_URL = TBD
-    PORT = 3001
+    PROD_DATABASE_URL = x
+    PORT = x
     ENVIROMENT = DEVELOPMENT
 
     EMAIL = x
@@ -36,7 +37,7 @@ MongoDB Compass:
 
 5. Open MongoDB Compass
 
-6. Under New Connection -> click on the 'Connect' button
+6. Under New Connection -> click on 'Connect'
 
 7. Now you should be able to see the database in your menu
 
