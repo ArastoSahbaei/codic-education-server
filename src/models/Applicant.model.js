@@ -18,11 +18,11 @@ const applicantSchema = Schema({
         type: String,
         required: true
     },
-    careerName: [{
+    career: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'career',
         required: true
-        }]
+        }
 }, { timestamps: true })
 
 const ApplicantModel = mongoose.model('applicant', applicantSchema)

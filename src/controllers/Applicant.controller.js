@@ -2,19 +2,17 @@ import StatusCode from "../../configurations/StatusCode.js"
 import ApplicantModel from "../models/Applicant.model.js"
 import CareerModel from "../models/Career.model.js"
 
-
-
-const createApplicant = async (request, response) => {
+const createApplyforCareer  = async (request, response) => {
     console.log(request.body)
     const applicant = new ApplicantModel({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
         email: request.body.email,
         phone: request.body.phone,
-        careerName: request.body.careerName
+        career: request.body.career
     })
     try {
-        const career = await CareerModel.findById({_id: request.body.careerName})
+        const career = await CareerModel.findById({_id: request.body.career})
         career.applicants.push(applicant)
         const savedApplicant = await applicant.save()
         await career.save()
@@ -47,7 +45,7 @@ const getApplicantWithId = async (request, response) => {
 }
 
 export default{
-    createApplicant,
+    createApplyforCareer ,
     getAllApplicants,
     getApplicantWithId,
 }
