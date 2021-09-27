@@ -69,8 +69,6 @@ const updateJob = async (request, response) => {
     }
 }
 
-
-
 export default {
     createJob,
     getAllJobs,
