@@ -24,7 +24,7 @@ const careerSchema = Schema({
     },
 
     applicants: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
 		ref: 'applicant',
     }]
 }, { timestamps: true })

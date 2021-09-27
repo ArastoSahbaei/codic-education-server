@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-const applicant = Schema({
+const applicantSchema = Schema({
     firstName: {
         type: String,
         required: true
@@ -18,8 +18,14 @@ const applicant = Schema({
         type: String,
         required: true
     },
+    careerName: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'career',
+        required: true
+        }]
+
 
 }, { timestamps: true })
 
-const ApplicantModel = mongoose.model('applicant', applicantScema)
+const ApplicantModel = mongoose.model('applicant', applicantSchema)
 export default ApplicantModel

@@ -1,7 +1,5 @@
 import CareerModel from "../models/Career.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
-import { request } from "chai"
-import { response } from "express"
 
 const createJob = async (request, response) => {
     const job = new CareerModel({

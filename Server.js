@@ -18,6 +18,7 @@ import NewsLetterSubscriptionRoutes from './src/routes/NewsLetterSubscription.ro
 import EmployeeRoutes from './src/routes/Employee.routes.js'
 import passportConfig from './configurations/passport-config.js'
 import CareerRoutes from './src/routes/Career.routes.js'
+import ApplicantRoutes from './src/routes/Applicant.routes.js'
 
 const application = express()
 application.use(passport.initialize())
@@ -40,6 +41,7 @@ ShoppingCartRoutes.routes(application)
 NewsLetterSubscriptionRoutes.routes(application)
 CareerRoutes.routes(application)
 EmployeeRoutes.routes(application)
+ApplicantRoutes.routes(application)
 
 application.use(Middlewares.notFound)
 application.use(Middlewares.errorHandler)
