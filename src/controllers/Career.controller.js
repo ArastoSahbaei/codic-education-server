@@ -9,7 +9,6 @@ const createJob = async (request, response) => {
         jobType: request.body.jobType,
         lastDate: request.body.lastDate
     })
-
     try {
         const savedJob = await job.save()
         response.status(StatusCode.CREATED).send(savedJob)

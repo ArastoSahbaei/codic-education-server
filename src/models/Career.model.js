@@ -22,7 +22,6 @@ const careerSchema = Schema({
         type: Date,
         required: true
     },
-
     applicants: [{
         type: mongoose.Schema.Types.ObjectId,
 		ref: 'applicant',

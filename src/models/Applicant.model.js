@@ -23,8 +23,6 @@ const applicantSchema = Schema({
         ref: 'career',
         required: true
         }]
-
-
 }, { timestamps: true })
 
 const ApplicantModel = mongoose.model('applicant', applicantSchema)
