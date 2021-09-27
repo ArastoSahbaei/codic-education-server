@@ -70,9 +70,7 @@ const updateJob = async (request, response) => {
     }
 }
 
-const createApplicant = async (request, response) => {
 
-}
 
 export default {
     createJob,
@@ -80,5 +78,4 @@ export default {
     getJobByID,
     updateJob,
     deleteJob,
-    createApplicant
 }
