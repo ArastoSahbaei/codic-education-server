@@ -26,7 +26,7 @@ application.use(cors({ credentials: true }))
 application.use(express.json())
 application.use(helmet())
 application.use(morgan('common'))
-application.use('/static', express.static(path.join(process.cwd(), 'configurations')))
+application.use('/static', express.static(path.join(path.resolve(), 'configurations/uploads')))
 
 passportConfig.registerUserini()
 passportConfig.login()
