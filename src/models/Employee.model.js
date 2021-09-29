@@ -23,6 +23,24 @@ const employeeSchema = Schema({
         startEmployeeDate: Date,
         lastEmployeeDate: Date,
         isEmploymentActive: Boolean
+    },
+    image: {
+        fileName: {
+            type: String,
+
+        },
+        filePath: {
+            type: String,
+
+        },
+        fileType: {
+            type: String,
+
+        },
+        fileSize: {
+            type: String,
+
+        }
     }
 
 }, { timestamps: true })
