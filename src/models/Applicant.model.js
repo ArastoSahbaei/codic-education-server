@@ -1,32 +1,29 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-const careerSchema = Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    description: {
+const applicantSchema = Schema({
+    firstName: {
         type: String,
         required: true
     },
-    location: {
+    lastName: {
         type: String,
         required: true
     },
-    jobType: {
+    email: {
         type: String,
         required: true
     },
-    lastDate: {
-        type: Date,
+    phone: {
+        type: String,
         required: true
     },
-    applicants: [{
+    career: {
         type: mongoose.Schema.Types.ObjectId,
-		ref: 'applicant',
-    }]
+        ref: 'career',
+        required: true
+        }
 }, { timestamps: true })
 
-const CareerModel = mongoose.model('career', careerSchema)
-export default CareerModel
+const ApplicantModel = mongoose.model('applicant', applicantSchema)
+export default ApplicantModel
