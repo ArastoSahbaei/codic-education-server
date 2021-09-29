@@ -57,7 +57,26 @@ const userSchema = Schema({
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
-	}]
+	}],
+	avatar: {
+		fileName: {
+			type: String,
+
+		},
+		filePath: {
+			type: String,
+
+		},
+		fileType: {
+			type: String,
+
+		},
+		fileSize: {
+			type: String,
+
+		}
+	}
+
 
 }, { timestamps: true, strict: true })
 

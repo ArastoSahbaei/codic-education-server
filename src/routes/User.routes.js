@@ -1,5 +1,21 @@
 import UserController from '../controllers/User.controller.js'
 import Middlewares from '../middlewares/Middlewares.js'
+import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
+
+const fileStorageEngine = multer.diskStorage({
+	destination: (req, file, cb) => {
+		const pathDestination = "configurations/uploads/useravatars"
+		fs.mkdirSync(pathDestination, { recursive: true })
+		return cb(null, pathDestination)
+	},
+	filename: (req, file, cb) => {
+		cb(null, req.params.userId + path.extname(file.originalname))
+	}
+})
+
+const upload = multer({ storage: fileStorageEngine })
 
 const routes = application => {
 	application.post('/user/login', UserController.login)
@@ -15,6 +31,7 @@ const routes = application => {
 	application.put('/shoppingcart/add', UserController.updateCart)
 	application.put('/favouriteproducts', UserController.updateFavouriteProducts)
 	application.delete('/user/:userId', UserController.deleteUserWithID)
+	application.put('/user/upload/:userId', upload.single('files'), UserController.uploadAvatar)
 }
 
 export default { routes }
