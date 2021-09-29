@@ -46,5 +46,8 @@ ApplicantRoutes.routes(application)
 application.use(Middlewares.notFound)
 application.use(Middlewares.errorHandler)
 
+
+
+
 Configuration.connectToDatabase()
 Configuration.connectToPort(application)

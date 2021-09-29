@@ -1,5 +1,7 @@
 import EmployeeModel from "../models/Employee.model.js"
 import StatusCode from "../../configurations/StatusCode.js"
+import filesizeFormatter from "../functions/filesizeFormatter.js"
+import path from 'path'
 
 const createEmployee = async (request, response) => {
     const employee = new EmployeeModel({
@@ -9,6 +11,7 @@ const createEmployee = async (request, response) => {
         email: request.body.email,
         mobile: request.body.mobile,
         employeeInformation: request.body.employeeInformation
+
     })
     try {
         const databaseResponse = await employee.save()
@@ -59,9 +62,27 @@ const deleteEmployeeWithID = async (request, response) => {
     }
 }
 
+const uploadEmployeeAvatar = async (request, response) => {
+    try {
+        const databaseResponse = await EmployeeModel.findByIdAndUpdate(request.params.employeeId, {
+            image: {
+                fileName: request.params.employeeId + path.extname(request.file.originalname),
+                filePath: request.file.path,
+                fileType: request.file.mimetype,
+                fileSize: filesizeFormatter.fileSizeFormatter(request.file.size, 2)
+            }
+        }, { new: true })
+        await databaseResponse.save()
+        response.json({ message: "Successfully uploaded files" });
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export default {
     createEmployee,
     getAllEmployees,
     updateEmployee,
-    deleteEmployeeWithID
+    deleteEmployeeWithID,
+    uploadEmployeeAvatar
 }
