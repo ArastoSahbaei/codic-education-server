@@ -1,9 +1,14 @@
 import EmployeeController from "../controllers/Employee.controller.js"
 import multer from 'multer'
 import path from 'path'
+import fs from 'fs'
 
 const fileStorageEngine = multer.diskStorage({
-    destination: "configurations/uploads/employeeImages",
+    destination: (req, file, cb) => {
+        const pathDestination = "configurations/uploads/employeeimages"
+        fs.mkdirSync(pathDestination, { recursive: true })
+        return cb(null, pathDestination)
+      },
     filename: (req, file, cb) => {
         cb(null, req.params.employeeId + path.extname(file.originalname))
     }
