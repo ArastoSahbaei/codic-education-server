@@ -7,7 +7,6 @@ const addNewsLetterSubscription = async (request, response) => {
 		user: request.body.user,
 		receiveNewsLetters: request.body.receiveNewsLetters
 	})
-	console.log('LOL')
 	try {
 		const databaseResponse = await newsLetterSubscription.save()
 		response.status(StatusCode.CREATED).send(databaseResponse)
