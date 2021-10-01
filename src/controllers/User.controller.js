@@ -8,6 +8,8 @@ import dotenv from 'dotenv'
 import Configurations from '../../configurations/Configurations.js'
 import ShoppingCartModel from '../models/ShoppingCart.model.js'
 import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
+import path from 'path'
+import filesizeFormatter from "../functions/filesizeFormatter.js"
 
 dotenv.config()
 
@@ -188,6 +190,23 @@ const deleteUserWithID = async (request, response) => {
 	}
 }
 
+const uploadAvatar = async (request, response) => {
+	try {
+		const databaseResponse = await UserModel.findByIdAndUpdate(request.params.userId, {
+			avatar: {
+				fileName: request.params.userId + path.extname(request.file.originalname),
+				filePath: request.file.path,
+				fileType: request.file.mimetype,
+				fileSize: filesizeFormatter.fileSizeFormatter(request.file.size, 2)
+			}
+		}, { new: true })
+		await databaseResponse.save()
+		response.json({ message: "Successfully uploaded files" });
+	} catch (error) {
+		console.log(error)
+	}
+}
+
 const updatePassword = async (request, response) => {
 	const BCRYPT_SALT_ROUNDS = 12
 	console.log(request.body.newPassword)
@@ -298,4 +317,5 @@ export default {
 	updateCart,
 	updateFavouriteProducts,
 	deleteUserWithID,
+	uploadAvatar
 }
