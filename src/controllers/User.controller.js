@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken'
-import passport from 'passport'
+import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
+import ShoppingCartModel from '../models/ShoppingCart.model.js'
 import UserModel from '../models/User.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
+import filesizeFormatter from "../functions/filesizeFormatter.js"
+import Configurations from '../../configurations/Configurations.js'
+import passport from 'passport'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
-import Configurations from '../../configurations/Configurations.js'
-import ShoppingCartModel from '../models/ShoppingCart.model.js'
-import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
 import path from 'path'
-import filesizeFormatter from "../functions/filesizeFormatter.js"
+import jwt from 'jsonwebtoken'
 
 dotenv.config()
 
