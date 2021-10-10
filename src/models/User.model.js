@@ -17,7 +17,8 @@ const userSchema = Schema({
 		lowercase: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid'],
 		index: true,
-		sparse: true
+		sparse: true,
+		trim: true
 	},
 	accountValidation: {
 		isEmailVerified: { type: Boolean, default: false },
