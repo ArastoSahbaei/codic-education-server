@@ -108,8 +108,8 @@ const registerNewUser = async (request, response, next) => {
 			})
 			await shoppingCart.save()
 			const newsLetterSubscription = new NewsLetterSubscriptionModel({
-				email: request.body.email,
 				user: user._id,
+				email: request.body.email,
 				receiveNewsLetters: request.body.receiveNewsLetters
 			})
 			await newsLetterSubscription.save()
