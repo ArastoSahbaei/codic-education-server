@@ -100,7 +100,6 @@ const registerNewUser = async (request, response, next) => {
 				username: request.body.username,
 				email: request.body.email,
 				password: hashedPassword,
-				name: request.body.name,
 				favouriteProducts: []
 			})
 			const shoppingCart = new ShoppingCartModel({
