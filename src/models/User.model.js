@@ -24,7 +24,15 @@ const userSchema = Schema({
 		isAccountDisabled: { type: Boolean, default: false },
 		isAccountBanned: { type: Boolean, default: false }
 	},
-	password: { type: String, required: true },
+	password: {
+		type: String,
+		required: true
+	},
+	role: {
+		type: String,
+		default: 'basic',
+		enum: ['basic', 'employee', 'admin']
+	},
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	personalDetails: {
