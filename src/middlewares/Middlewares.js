@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-import jwt from 'jsonwebtoken'
 import StatusCode from '../../configurations/StatusCode.js'
 
 dotenv.config()
