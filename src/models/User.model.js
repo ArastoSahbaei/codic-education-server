@@ -39,7 +39,7 @@ const userSchema = Schema({
 	personalDetails: {
 		firstName: { type: String, default: '' },
 		lastName: { type: String, default: '' },
-		gender: { type: Boolean },
+		gender: { type: String, enum: ['male', 'female'] },
 		country: { type: String, default: '' },
 		adress: { type: String, default: '' },
 		secondaryAdress: { type: String, default: '' },
