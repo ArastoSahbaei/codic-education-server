@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import path from 'path'
 import jwt from 'jsonwebtoken'
+import { encryptPassword } from '../functions/encryptPassword.js'
 
 dotenv.config()
 
@@ -84,7 +85,7 @@ const registerNewUser = async (request, response, next) => {
 			console.log(error)
 		} else {
 			const BCRYPT_SALT_ROUNDS = 12
-			const hashedPassword = await bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
+			const hashedPassword = await encryptPassword(request.body.password)
 			const user = new UserModel({
 				username: request.body.username,
 				email: request.body.email,
