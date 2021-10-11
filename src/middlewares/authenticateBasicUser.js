@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import StatusCode from '../../configurations/StatusCode.js'
 
 export const authenticateBasicUser = (request, response, next) => {
 	const header = request.headers['authorization']
