@@ -84,7 +84,6 @@ const registerNewUser = async (request, response, next) => {
 			response.status(StatusCode.DUBLICATE_RESOURCE).send({ message: error.message + info + 'LOL?' })
 			console.log(error)
 		} else {
-			const BCRYPT_SALT_ROUNDS = 12
 			const hashedPassword = await encryptPassword(request.body.password)
 			const user = new UserModel({
 				username: request.body.username,
