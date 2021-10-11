@@ -196,11 +196,8 @@ const uploadAvatar = async (request, response) => {
 }
 
 const updatePassword = async (request, response) => {
-	const BCRYPT_SALT_ROUNDS = 12
-	console.log(request.body.newPassword)
-	const hashedPassword = await bcrypt.hash(request.body.newPassword, BCRYPT_SALT_ROUNDS)
-	console.log(hashedPassword)
 	try {
+		const hashedPassword = await encryptPassword(request.body.newPassword)
 		const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
 			password: hashedPassword
 		}, { new: true })
