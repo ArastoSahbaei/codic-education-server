@@ -14,18 +14,7 @@ import jwt from 'jsonwebtoken'
 dotenv.config()
 
 const testingAuthenticatedRoute = async (request, response) => {
-	jwt.verify(request.token, 'jwtSecret.secret', (error, authorizedData) => {
-		if (error) {
-			//If error send Forbidden (403)
-			response.status(StatusCode.FORBIDDEN).send({ message: `error: ${error}` })
-		} else {
-			//If token is successfully verified, we can send the autorized data 
-			response.json({
-				message: 'Successful log in',
-				authorizedData
-			})
-		}
-	})
+	response.json({ message: 'Successful' })
 }
 
 const updateCart = async (request, response) => {
