@@ -53,6 +53,12 @@ const userSchema = Schema({
 		method: String,
 		number: String
 	},
+	avatar: {
+		fileName: { type: String },
+		filePath: { type: String },
+		fileType: { type: String },
+		fileSize: { type: String }
+	},
 	shoppingCart: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'shoppingcart',
@@ -66,29 +72,8 @@ const userSchema = Schema({
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
-	}],
-	avatar: {
-		fileName: {
-			type: String,
-
-		},
-		filePath: {
-			type: String,
-
-		},
-		fileType: {
-			type: String,
-
-		},
-		fileSize: {
-			type: String,
-
-		}
-	}
-
-
+	}]
 }, { timestamps: true, strict: true })
-
 
 const UserModel = mongoose.model('user', userSchema)
 export default UserModel
