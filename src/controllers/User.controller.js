@@ -81,7 +81,7 @@ const login = async (request, response, next) => {
 const registerNewUser = async (request, response, next) => {
 	passport.authenticate('register', async (error, createdUser, info) => {
 		if (error) {
-			response.status(StatusCode.DUBLICATE_RESOURCE).send({ message: error.message + info + 'LOL?' })
+			response.status(StatusCode.DUBLICATE_RESOURCE).send({ message: error.message + info })
 			console.log(error)
 		} else {
 			const hashedPassword = await encryptPassword(request.body.password)
