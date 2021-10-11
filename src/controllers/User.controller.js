@@ -154,7 +154,7 @@ const getUserWithQuery = async (request, response) => {
 const updateUser = async (request, response) => {
 	try {
 		if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
-		const databaseResponse = await UserModel.findByIdAndUpdate(request.params.userId, {
+		const databaseResponse = await UserModel.findByIdAndUpdate(request.body.id, {
 			personalDetails: request.body.personalDetails
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
@@ -206,39 +206,8 @@ const updatePassword = async (request, response) => {
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
-
+		response.status(StatusCode.METHOD_NOT_ALLOWED)
 	}
-	/* 	passport.authenticate('jwt', { session: false }, (error, user, info) => {
-			if (error) { console.error(error) }
-			if (info !== undefined) {
-				console.error(info.message)
-				response.status(403).send(info.message)
-			} else {
-				UserModel.findOne({
-					username: request.body.username,
-				}).then((userInfo) => {
-					if (userInfo != null) {
-						console.log('user found in db')
-						bcrypt
-							.hash(request.body.password, BCRYPT_SALT_ROUNDS)
-							.then((hashedPassword) => {
-								userInfo.update({
-									password: hashedPassword,
-								})
-							})
-							.then(() => {
-								console.log('password updated')
-								response
-									.status(200)
-									.send({ auth: true, message: 'password updated' })
-							})
-					} else {
-						console.error('no user exists in db to update')
-						response.status(404).json('no user exists in db to update')
-					}
-				})
-			}
-		})(request, response, next) */
 }
 
 const retrieveLostAccount = async (request, response) => {

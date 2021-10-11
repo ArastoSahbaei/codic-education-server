@@ -27,7 +27,7 @@ const routes = application => {
 	application.get('/user', UserController.getAllUsers)
 	application.get('/user/:userId', UserController.getUserByID)
 
-	application.put('/user/:userId', authenticateBasicUser, UserController.updateUser)
+	application.put('/user', authenticateBasicUser, UserController.updateUser)
 	application.put('/updatepassword', UserController.updatePassword)
 	application.put('/resetpassword', UserController.resetPassword)
 	application.put('/shoppingcart/add', UserController.updateCart)
