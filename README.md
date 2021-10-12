@@ -53,13 +53,13 @@ npm install
 1. In the project directory you can run:
 
 ```
-nodemone Server.js
+nodemon Server.js
 ```
 
 or
 
 ```
-npx nodemone Server.js
+npx nodemon Server.js
 ```
 Runs the app in the development mode.
 
