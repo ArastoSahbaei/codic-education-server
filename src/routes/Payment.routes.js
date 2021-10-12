@@ -1,4 +1,3 @@
-import Middlewares from '../middlewares/Middlewares.js'
 import PaymentController from '../controllers/Payment.controller.js'
 
 const routes = application => {

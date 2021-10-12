@@ -26,19 +26,13 @@ const connectToDatabase = async () => {
 	}
 }
 
-const connectToPort = async (app) => {
+const connectToPort = async (application) => {
 	try {
-		await app.listen(PORT || 3001, () => {
+		await application.listen(PORT || 3001, () => {
 			console.log(`✔️  SERVER IS RUNNING ON PORT: ${PORT || 3001}`)
 		})
 	} catch (error) {
 		console.log('❌  ERROR OCCURED WHILE TRYING TO CONNECT TO THE PORT..')
-	}
-}
-
-const buildFrontendInProduction = () => {
-	if (process.env.ENVIROMENT === "PRODUCTION") {
-		application.use(express.static('client/build'))
 	}
 }
 
@@ -118,6 +112,5 @@ export default {
 	connectToDatabase,
 	connectToPort,
 	sendEmail,
-	buildFrontendInProduction,
 	sendContactEmail
 }

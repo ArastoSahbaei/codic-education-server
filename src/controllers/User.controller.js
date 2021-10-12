@@ -1,31 +1,21 @@
-import jwt from 'jsonwebtoken'
-import passport from 'passport'
+import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
+import ShoppingCartModel from '../models/ShoppingCart.model.js'
 import UserModel from '../models/User.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
+import filesizeFormatter from "../functions/filesizeFormatter.js"
+import Configurations from '../../configurations/Configurations.js'
+import passport from 'passport'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
-import Configurations from '../../configurations/Configurations.js'
-import ShoppingCartModel from '../models/ShoppingCart.model.js'
-import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
 import path from 'path'
-import filesizeFormatter from "../functions/filesizeFormatter.js"
+import jwt from 'jsonwebtoken'
+import { encryptPassword } from '../functions/encryptPassword.js'
 
 dotenv.config()
 
 const testingAuthenticatedRoute = async (request, response) => {
-	jwt.verify(request.token, 'jwtSecret.secret', (error, authorizedData) => {
-		if (error) {
-			//If error send Forbidden (403)
-			response.status(StatusCode.FORBIDDEN).send({ message: `error: ${error}` })
-		} else {
-			//If token is successfully verified, we can send the autorized data 
-			response.json({
-				message: 'Successful log in',
-				authorizedData
-			})
-		}
-	})
+	response.json({ message: 'Successful' })
 }
 
 const updateCart = async (request, response) => {
@@ -91,16 +81,14 @@ const login = async (request, response, next) => {
 const registerNewUser = async (request, response, next) => {
 	passport.authenticate('register', async (error, createdUser, info) => {
 		if (error) {
-			response.status(StatusCode.DUBLICATE_RESOURCE).send({ message: error.message + info + 'LOL?' })
+			response.status(StatusCode.DUBLICATE_RESOURCE).send({ message: error.message + info })
 			console.log(error)
 		} else {
-			const BCRYPT_SALT_ROUNDS = 12
-			const hashedPassword = await bcrypt.hash(request.body.password, BCRYPT_SALT_ROUNDS)
+			const hashedPassword = await encryptPassword(request.body.password)
 			const user = new UserModel({
 				username: request.body.username,
 				email: request.body.email,
 				password: hashedPassword,
-				name: request.body.name,
 				favouriteProducts: []
 			})
 			const shoppingCart = new ShoppingCartModel({
@@ -109,8 +97,8 @@ const registerNewUser = async (request, response, next) => {
 			})
 			await shoppingCart.save()
 			const newsLetterSubscription = new NewsLetterSubscriptionModel({
-				email: request.body.email,
 				user: user._id,
+				email: request.body.email,
 				receiveNewsLetters: request.body.receiveNewsLetters
 			})
 			await newsLetterSubscription.save()
@@ -166,7 +154,7 @@ const getUserWithQuery = async (request, response) => {
 const updateUser = async (request, response) => {
 	try {
 		if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
-		const databaseResponse = await UserModel.findByIdAndUpdate(request.params.userId, {
+		const databaseResponse = await UserModel.findByIdAndUpdate(request.body.id, {
 			personalDetails: request.body.personalDetails
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
@@ -208,49 +196,15 @@ const uploadAvatar = async (request, response) => {
 }
 
 const updatePassword = async (request, response) => {
-	const BCRYPT_SALT_ROUNDS = 12
-	console.log(request.body.newPassword)
-	const hashedPassword = await bcrypt.hash(request.body.newPassword, BCRYPT_SALT_ROUNDS)
-	console.log(hashedPassword)
 	try {
+		const hashedPassword = await encryptPassword(request.body.newPassword)
 		const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
 			password: hashedPassword
 		}, { new: true })
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
-
+		response.status(StatusCode.METHOD_NOT_ALLOWED)
 	}
-	/* 	passport.authenticate('jwt', { session: false }, (error, user, info) => {
-			if (error) { console.error(error) }
-			if (info !== undefined) {
-				console.error(info.message)
-				response.status(403).send(info.message)
-			} else {
-				UserModel.findOne({
-					username: request.body.username,
-				}).then((userInfo) => {
-					if (userInfo != null) {
-						console.log('user found in db')
-						bcrypt
-							.hash(request.body.password, BCRYPT_SALT_ROUNDS)
-							.then((hashedPassword) => {
-								userInfo.update({
-									password: hashedPassword,
-								})
-							})
-							.then(() => {
-								console.log('password updated')
-								response
-									.status(200)
-									.send({ auth: true, message: 'password updated' })
-							})
-					} else {
-						console.error('no user exists in db to update')
-						response.status(404).json('no user exists in db to update')
-					}
-				})
-			}
-		})(request, response, next) */
 }
 
 const retrieveLostAccount = async (request, response) => {

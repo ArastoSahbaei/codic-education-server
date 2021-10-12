@@ -3,9 +3,8 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import cors from 'cors'
 import passport from 'passport'
-
+import passportConfig from './configurations/passport-config.js'
 import Configuration from './configurations/Configurations.js'
-import Middlewares from './src/middlewares/Middlewares.js'
 import UserRoutes from './src/routes/User.routes.js'
 import PaymentRoutes from './src/routes/Payment.routes.js'
 import OrderRoutes from './src/routes/Order.routes.js'
@@ -16,9 +15,10 @@ import ShoppingCartRoutes from './src/routes/ShoppingCart.routes.js'
 import ContactRoutes from './src/routes/Contact.routes.js'
 import NewsLetterSubscriptionRoutes from './src/routes/NewsLetterSubscription.routes.js'
 import EmployeeRoutes from './src/routes/Employee.routes.js'
-import passportConfig from './configurations/passport-config.js'
 import CareerRoutes from './src/routes/Career.routes.js'
 import ApplicantRoutes from './src/routes/Applicant.routes.js'
+import { notFound } from './src/middlewares/notFound.js'
+import { errorHandler } from './src/middlewares/errorHandler.js'
 
 const application = express()
 application.use(passport.initialize())
@@ -43,11 +43,8 @@ CareerRoutes.routes(application)
 EmployeeRoutes.routes(application)
 ApplicantRoutes.routes(application)
 
-application.use(Middlewares.notFound)
-application.use(Middlewares.errorHandler)
-
-
-
+application.use(notFound)
+application.use(errorHandler)
 
 Configuration.connectToDatabase()
 Configuration.connectToPort(application)

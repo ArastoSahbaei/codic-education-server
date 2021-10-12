@@ -17,20 +17,29 @@ const userSchema = Schema({
 		lowercase: true,
 		match: [/\S+@\S+\.\S+/, 'is invalid'],
 		index: true,
-		sparse: true
+		sparse: true,
+		trim: true
 	},
 	accountValidation: {
 		isEmailVerified: { type: Boolean, default: false },
 		isAccountDisabled: { type: Boolean, default: false },
 		isAccountBanned: { type: Boolean, default: false }
 	},
-	password: { type: String, required: true },
+	password: {
+		type: String,
+		required: true
+	},
+	role: {
+		type: String,
+		enum: ['basic', 'employee', 'admin'],
+		default: 'basic'
+	},
 	resetPasswordToken: String,
 	resetPasswordExpires: Date,
 	personalDetails: {
 		firstName: { type: String, default: '' },
 		lastName: { type: String, default: '' },
-		gender: { type: Boolean },
+		gender: { type: String, enum: ['male', 'female'] },
 		country: { type: String, default: '' },
 		adress: { type: String, default: '' },
 		secondaryAdress: { type: String, default: '' },
@@ -43,6 +52,12 @@ const userSchema = Schema({
 	creditCard: {
 		method: String,
 		number: String
+	},
+	avatar: {
+		fileName: { type: String },
+		filePath: { type: String },
+		fileType: { type: String },
+		fileSize: { type: String }
 	},
 	shoppingCart: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -57,29 +72,8 @@ const userSchema = Schema({
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
-	}],
-	avatar: {
-		fileName: {
-			type: String,
-
-		},
-		filePath: {
-			type: String,
-
-		},
-		fileType: {
-			type: String,
-
-		},
-		fileSize: {
-			type: String,
-
-		}
-	}
-
-
+	}]
 }, { timestamps: true, strict: true })
-
 
 const UserModel = mongoose.model('user', userSchema)
 export default UserModel
