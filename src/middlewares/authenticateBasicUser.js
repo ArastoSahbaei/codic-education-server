@@ -8,6 +8,8 @@ export const authenticateBasicUser = (request, response, next) => {
 		const token = bearer[1]
 		const verified = jwt.verify(token, 'jwtSecret.secret')
 		const isCorrectUser = request.body.id && request.body.id === verified.id
+
+		//TODO: isCorrectUser || isAdminUser
 		if (isCorrectUser) {
 			next()
 		} else {
