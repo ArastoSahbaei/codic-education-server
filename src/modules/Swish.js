@@ -1,8 +1,10 @@
 import fs from 'fs'
 import https from 'https'
+import crypto from 'crypto'
 
 const testConfig = {
     payeeAlias: "1231181189",
+    baseURL: 'https://mss.cpc.getswish.net/swish-cpcapi',
     key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
     cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
     ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
@@ -12,8 +14,8 @@ const config = testConfig
 
 const createPaymentRequest = async (request, response) => {
 
-    const instructionUUID = '9F9C2F35D92340348F130D702E6C4CCC' //create function that returns new uuid
-
+    const instructionUUID = crypto.randomBytes(16).toString("hex")
+    console.log(instructionUUID)
 
     const data = new TextEncoder().encode(
         JSON.stringify({
@@ -26,28 +28,65 @@ const createPaymentRequest = async (request, response) => {
         })
     )
 
-    const url = `https://mss.cpc.getswish.net/swish-cpcapi/api/v2/paymentrequests/${instructionUUID}`
-    const options = {
-        port: 443,
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': data.length
-        },
-        key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
-        cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
-        ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
-        passphrase: config.passphrase
+    function requestOptions(method) {
+        return {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': data.length
+            },
+            key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
+            cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
+            ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
+            passphrase: config.passphrase
+        }
     }
 
-    options.agent = new https.Agent(options);
+    const options = requestOptions('PUT')
 
-    const req = https.request(url, options, res => {
+    options.agent = new https.Agent(options)
+
+    const req = https.request(`${config.baseURL}/api/v2/paymentrequests/${instructionUUID.toUpperCase()}`, options, res => {
         console.log(`statusCode: ${res.statusCode}`)
+        if (!res) {
+            response.status(500).send(error)
+        }
+
+        response.status(res.statusCode)
+        if (res.statusCode == 201) {
+            const opt = requestOptions('GET')
+            options.agent = new https.Agent(opt);
+
+            const requ = https.request(`${config.baseURL}/api/v1/paymentrequests/${instructionUUID.toUpperCase()}`, opt, (resp) => {
+                console.log('statusCode:', resp.statusCode)
+                console.log('headers:', resp.headers)
+                let responseBody = ''
+                if(!resp){
+                        response.status(500).send(error)
+                }
+
+                resp.on('data', (chunk) => {
+                    process.stdout.write(chunk)
+                    responseBody += chunk
+                })
+                
+                resp.on('end', () => {
+                    response.send(JSON.parse(responseBody))
+                })
+
+            })
+
+            requ.on('error', (e) => {
+                console.error(e)
+            })
+
+            requ.end()
+        }
 
         res.on('data', d => {
             process.stdout.write(d)
         })
+
     })
 
     req.on('error', error => {
@@ -57,15 +96,11 @@ const createPaymentRequest = async (request, response) => {
     req.write(data)
     req.end()
 
-    /* if (!res) {
-        response.status(500).send(error)
-        return
-    } */
 
-    response.send('hello')
-    
 }
 
-    export default {
-        createPaymentRequest
-    }
+
+
+export default {
+    createPaymentRequest
+}
