@@ -4,6 +4,7 @@ const { Schema } = mongoose
 const orderItemSchema = Schema({
     product: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
         required: true
     },
     quantity: {
@@ -15,3 +16,6 @@ const orderItemSchema = Schema({
         required: true
     }
 }, { timestamps: true })
+
+const OrderItemModel = mongoose.model('orderItem', orderItemSchema)
+export default OrderItemModel
