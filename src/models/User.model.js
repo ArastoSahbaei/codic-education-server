@@ -72,7 +72,12 @@ const userSchema = Schema({
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
+	}],
+	orders: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'order'
 	}]
+
 }, { timestamps: true, strict: true })
 
 const UserModel = mongoose.model('user', userSchema)

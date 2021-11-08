@@ -182,38 +182,26 @@ const createOrderSwish = async (request, response) => {
 		return await newOrderItem.save()
 	}))
 
-	const user = await UserModel.findById({ _id: userId }).then(async (user) => {
-
-		const order = new OrderModel({
-			orderItems: orderItems,
-			user: user,
-			shipping: shipping
-		})
-
-		await order.save()
-
-		try{
-			const swishpayment = await Swish.createPaymentRequest(order)
-			order.swishUuid = swishpayment.id
-			order.swishPaymentReference = swishpayment.paymentReference
-
-			await order.save()
-			response.send(order)
-		}
-		catch(error) {
-			response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
-		}
-		
-
-	}).catch((error) => {
-		console.log(error)
-		response
-			.status(StatusCode.INTERNAL_SERVER_ERROR)
-			.send({ message: error.message });
+	const order = new OrderModel({
+		orderItems: orderItems,
+		user: userId,
+		shipping: shipping
 	})
 
+	try {
+		const user = await UserModel.findById({ _id: userId })
+		user.orders.push(order)
+		const savedOrder = await order.save()
+		await user.save()
+		const swishpayment = await Swish.createPaymentRequest(savedOrder)
+		savedOrder.swishUuid = swishpayment.id
+		savedOrder.swishPaymentReference = swishpayment.paymentReference
 
-
+		await savedOrder.save()
+		response.status(StatusCode.CREATED).send(savedOrder)
+	} catch (error) {
+		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
+	}
 
 }
 
