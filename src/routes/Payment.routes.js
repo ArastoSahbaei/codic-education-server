@@ -6,7 +6,8 @@ const routes = application => {
 	application.get('/payment/capture-order', PaymentController.captureOrder)
 	application.get('/payment/authorize-order', PaymentController.authorizeOrder)
 	application.get('/payment/cancel', PaymentController.cancelOrder)
-	application.post('/payment', Swish.createPaymentRequest)
+	application.post('/payment', PaymentController.createOrderSwish)
+	application.get('/getpaymentstatus/:requestId', PaymentController.getpaymentstatus)
 }
 
 export default { routes }

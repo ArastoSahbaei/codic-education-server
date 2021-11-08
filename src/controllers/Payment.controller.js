@@ -1,13 +1,16 @@
 import StatusCode from "../../configurations/StatusCode.js";
 import OrderModel from "../models/Order.model.js";
+import OrderItemModel from "../models/OrderItem.model.js";
 import ShoppingCartModel from "../models/ShoppingCart.model.js";
 import UserModel from "../models/User.model.js";
 import ProductModel from "../models/Product.model.js";
 import PaypalService from "../modules/Paypal.js";
 import { calculateTotalPrice } from '../functions/functions.js';
+import Swish from "../modules/Swish.js"
+
 
 const createOrder = async (request, response) => {
-  console.log('Running createOrder');
+	console.log('Running createOrder');
 	const data = JSON.parse(new Buffer(request.params.data, 'base64').toString('ascii'));
 
 	const { userId, form, productIds } = data;
@@ -23,21 +26,21 @@ const createOrder = async (request, response) => {
 
 	UserModel.findById({ _id: userId })
 		.then(async (user) => {
-      const ids = productIds.split(',');
-      const products = await Promise.all(ids.map(id => ProductModel.findOne({ _id: id }) ));
+			const ids = productIds.split(',');
+			const products = await Promise.all(ids.map(id => ProductModel.findOne({ _id: id })));
 
-      const order = await new OrderModel({
-					products: products,
-					user: user
+			const order = await new OrderModel({
+				products: products,
+				user: user
 			});
 
-      await order.save();
+			await order.save();
 
 			PaypalService.sendProductsToPaypal(products, shipping, order).then(async paypalOrder => {
 
 				const links = paypalOrder.result.links;
 
-        console.log('links', links);
+				console.log('links', links);
 
 				const redirectLink = links.find(link => link.rel === "approve");
 				const href = redirectLink && redirectLink.href;
@@ -45,7 +48,7 @@ const createOrder = async (request, response) => {
 				order.paypalOrderId = paypalOrder.result.id;
 
 				await order.save();
-        console.log('order saved', order);
+				console.log('order saved', order);
 
 				if (href) {
 					return response.redirect(href);
@@ -71,7 +74,7 @@ const createOrder = async (request, response) => {
 const captureOrder = async (request, response) => {
 	const orderID = request.query.orderId;
 	PaypalService.captureOrder(orderID).then(data => {
-    const { existingOrder, link } = data;
+		const { existingOrder, link } = data;
 		//response.send({ '_id': order._id })
 		response.redirect(`http://localhost:3000/order-finished?orderId=${existingOrder._id}`); // TODO: save in configuration or something
 	}).catch(error => {
@@ -84,28 +87,28 @@ const captureOrder = async (request, response) => {
 
 
 const authorizeOrder = async (request, response) => {
-  console.log('Running authorizeOrder');
+	console.log('Running authorizeOrder');
 
-  console.log('query', request.query);
-  console.log('body', request.body);
+	console.log('query', request.query);
+	console.log('body', request.body);
 
 	// 2a. Get the order ID from the request body
 	const orderID = request.query.orderId;
-  const existingOrder = await OrderModel.findOne({
+	const existingOrder = await OrderModel.findOne({
 		_id: orderID,
 	});
 
-  if (!existingOrder)
-    throw new Error(`Order with id ${orderID} does not exist.`);
+	if (!existingOrder)
+		throw new Error(`Order with id ${orderID} does not exist.`);
 
-  const paypalOrderId = existingOrder.paypalOrderId;
+	const paypalOrderId = existingOrder.paypalOrderId;
 
-  console.log('paypalOrderId', paypalOrderId);
+	console.log('paypalOrderId', paypalOrderId);
 
 	PaypalService.authorizeOrder(paypalOrderId).then(data => {
-    const { existingOrder, link } = data;
-    console.log(link);
-		 //response.redirect(link);
+		const { existingOrder, link } = data;
+		console.log(link);
+		//response.redirect(link);
 		response.redirect(`http://localhost:3000/order-finished?orderId=${existingOrder._id}`); // TODO: save in configuration or something
 	}).catch(error => {
 		console.log(error)
@@ -116,7 +119,7 @@ const authorizeOrder = async (request, response) => {
 }
 
 const cancelOrder = async (request, response) => {
-  try {
+	try {
 		console.log('Running authorizeOrder');
 
 		// 2a. Get the order ID from the request body
@@ -129,8 +132,8 @@ const cancelOrder = async (request, response) => {
 
 		if (!existingOrder) {
 			console.log(`Order with token ${token} does not exist.`);
-      response.redirect('http://localhost:3000'); // TODO: store in some configuration somewhere.
-    }
+			response.redirect('http://localhost:3000'); // TODO: store in some configuration somewhere.
+		}
 
 		const paypalOrderId = existingOrder.paypalOrderId;
 
@@ -144,17 +147,95 @@ const cancelOrder = async (request, response) => {
 				.status(StatusCode.INTERNAL_SERVER_ERROR)
 				.send({ message: error.message });
 		});
-  } catch(error) {
-    console.log(error)
-			response
-				.status(StatusCode.INTERNAL_SERVER_ERROR)
-				.send({ message: error.message });
-  }
+	} catch (error) {
+		console.log(error)
+		response
+			.status(StatusCode.INTERNAL_SERVER_ERROR)
+			.send({ message: error.message });
+	}
 }
+
+const createOrderSwish = async (request, response) => {
+
+	const userId = request.body.userId
+	const shipping = request.body.shipping
+	console.log(userId)
+	/* const data = JSON.parse(new Buffer(request.params.data, 'base64').toString('ascii'))
+
+	const { userId, form, productIds } = data
+
+	const shipping = Object.keys(form).reduce((prev, cur) => ({
+		...prev,
+		[cur]: form[cur].value
+
+	}), {})
+
+	shipping.addressFull = `${shipping.shippingStreet} ${shipping.shippingPostalCode} ${shipping.shippingCity}`
+	shipping.countryCode = 'SE'
+	shipping.fullName = `${shipping.firstname} ${shipping.lastname}` */
+	const orderItems = await Promise.all(request.body.cartItems.map(async orderItem => {
+		let newOrderItem = new OrderItemModel({
+			quantity: orderItem.quantity,
+			product: orderItem.product,
+			unitPrice: orderItem.price
+		})
+		return await newOrderItem.save()
+	}))
+
+	const user = await UserModel.findById({ _id: userId }).then(async (user) => {
+
+		const order = new OrderModel({
+			orderItems: orderItems,
+			user: user,
+			shipping: shipping
+		})
+
+		await order.save()
+
+		try{
+			const swishpayment = await Swish.createPaymentRequest(order)
+			order.swishUuid = swishpayment.id
+			order.swishPaymentReference = swishpayment.paymentReference
+
+			await order.save()
+			response.send(order)
+		}
+		catch(error) {
+			response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
+		}
+		
+
+	}).catch((error) => {
+		console.log(error)
+		response
+			.status(StatusCode.INTERNAL_SERVER_ERROR)
+			.send({ message: error.message });
+	})
+
+
+
+
+}
+
+const getpaymentstatus = async (request, response) => {
+
+	const paymentStatus = await Swish.getPaymentRequest(request.params.requestId).catch(error => {
+		console.log(error + 'error console log')
+		response
+			.status(StatusCode.INTERNAL_SERVER_ERROR)
+			.send({ message: error.message })
+	})
+
+
+	response.send(paymentStatus)
+}
+
 
 export default {
 	createOrder,
 	captureOrder,
 	authorizeOrder,
-  cancelOrder
+	cancelOrder,
+	createOrderSwish,
+	getpaymentstatus
 };
