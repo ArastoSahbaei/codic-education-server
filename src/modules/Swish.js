@@ -16,20 +16,20 @@ const createPaymentRequest = (order) => {
 
     const instructionUUID = crypto.randomBytes(16).toString('hex')
 
-    
+
     const data = new TextEncoder().encode(
         JSON.stringify({
             payeeAlias: config.payeeAlias,
             currency: 'SEK',
             callbackUrl: 'https://webhook.site/6721e832-c7d2-4026-918a-706f6246f163', //replace with actual callbackUrl
             payerAlias: '046798847345',
-            amount: 200, //should be calculated with calculateTotalPrice (functions.js)
+            amount: order.price,
             //message: 'BE18',
             payeePaymentReference: order.id || null
         })
     )
 
-    
+
     function requestOptions(method) {
         return {
             method: method,
@@ -105,7 +105,6 @@ const createPaymentRequest = (order) => {
 }
 
 const getPaymentRequest = async (id) => {
-    console.log(id)
 
     function requestOptions(method) {
         return {

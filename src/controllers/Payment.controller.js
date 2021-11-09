@@ -5,7 +5,7 @@ import ShoppingCartModel from "../models/ShoppingCart.model.js";
 import UserModel from "../models/User.model.js";
 import ProductModel from "../models/Product.model.js";
 import PaypalService from "../modules/Paypal.js";
-import { calculateTotalPrice } from '../functions/functions.js';
+import { calcTotal, calculateTotalPrice } from '../functions/functions.js';
 import Swish from "../modules/Swish.js"
 
 
@@ -159,20 +159,7 @@ const createOrderSwish = async (request, response) => {
 
 	const userId = request.body.userId
 	const shipping = request.body.shipping
-	console.log(userId)
-	/* const data = JSON.parse(new Buffer(request.params.data, 'base64').toString('ascii'))
 
-	const { userId, form, productIds } = data
-
-	const shipping = Object.keys(form).reduce((prev, cur) => ({
-		...prev,
-		[cur]: form[cur].value
-
-	}), {})
-
-	shipping.addressFull = `${shipping.shippingStreet} ${shipping.shippingPostalCode} ${shipping.shippingCity}`
-	shipping.countryCode = 'SE'
-	shipping.fullName = `${shipping.firstname} ${shipping.lastname}` */
 	const orderItems = await Promise.all(request.body.cartItems.map(async orderItem => {
 		let newOrderItem = new OrderItemModel({
 			quantity: orderItem.quantity,
@@ -182,10 +169,13 @@ const createOrderSwish = async (request, response) => {
 		return await newOrderItem.save()
 	}))
 
+	const totalAmount = calcTotal(orderItems)
+	
 	const order = new OrderModel({
 		orderItems: orderItems,
 		user: userId,
-		shipping: shipping
+		shipping: shipping,
+		price: totalAmount
 	})
 
 	try {
@@ -226,4 +216,4 @@ export default {
 	cancelOrder,
 	createOrderSwish,
 	getpaymentstatus
-};
+}

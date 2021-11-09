@@ -9,6 +9,7 @@ const orderItemSchema = Schema({
     },
     quantity: {
         type: Number,
+        default: 1,
         required: true
     },
     unitPrice: {
