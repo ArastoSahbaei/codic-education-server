@@ -29,22 +29,10 @@ const createPaymentRequest = (order, payerAlias) => {
         })
     )
 
-
-    function requestOptions(method) {
-        return {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': data.length
-            },
-            key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
-            cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
-            ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
-            passphrase: config.passphrase
-        }
-    }
-
-    const options = requestOptions('PUT')
+    const options = requestOptions('PUT', {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    })
 
     options.agent = new https.Agent(options)
 
@@ -106,15 +94,7 @@ const createPaymentRequest = (order, payerAlias) => {
 
 const getPaymentRequest = async (id) => {
 
-    function requestOptions(method) {
-        return {
-            method: method,
-            key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
-            cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
-            ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
-            passphrase: config.passphrase
-        }
-    }
+
 
     const options = requestOptions('GET')
     options.agent = new https.Agent(options);
@@ -146,6 +126,17 @@ const getPaymentRequest = async (id) => {
 
         req.end()
     })
+}
+
+function requestOptions(method, headers) {
+    return {
+        method: method,
+        headers: headers,
+        key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
+        cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
+        ca: fs.readFileSync('./configurations/ssl/Swish_TLS_RootCA.pem', { encoding: 'utf8' }),
+        passphrase: config.passphrase
+    }
 }
 
 
