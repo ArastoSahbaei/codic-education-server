@@ -157,9 +157,6 @@ const cancelOrder = async (request, response) => {
 
 const createOrderSwish = async (request, response) => {
 
-	const userId = request.body.userId
-	const shipping = request.body.shipping
-
 	const orderItems = await Promise.all(request.body.cartItems.map(async orderItem => {
 		let newOrderItem = new OrderItemModel({
 			quantity: orderItem.quantity,
@@ -167,26 +164,30 @@ const createOrderSwish = async (request, response) => {
 			unitPrice: orderItem.price
 		})
 		return await newOrderItem.save()
-	}))
+	})).catch(error => {
+		console.log(error)
+		response
+			.status(StatusCode.INTERNAL_SERVER_ERROR)
+			.send({ message: error.message })
+	})
 
 	const totalAmount = calcTotal(orderItems)
-	
+
 	const order = new OrderModel({
 		orderItems: orderItems,
-		user: userId,
-		shipping: shipping,
+		user: request.body.userId,
+		shipping: request.body.shipping,
 		price: totalAmount
 	})
 
 	try {
-		const user = await UserModel.findById({ _id: userId })
+		const user = await UserModel.findById({ _id: request.body.userId })
 		user.orders.push(order)
 		const savedOrder = await order.save()
 		await user.save()
-		const swishpayment = await Swish.createPaymentRequest(savedOrder)
+		const swishpayment = await Swish.createPaymentRequest(savedOrder, request.body.phone)
 		savedOrder.swishUuid = swishpayment.id
 		savedOrder.swishPaymentReference = swishpayment.paymentReference
-
 		await savedOrder.save()
 		response.status(StatusCode.CREATED).send(savedOrder)
 	} catch (error) {

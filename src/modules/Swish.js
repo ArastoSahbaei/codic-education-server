@@ -12,7 +12,7 @@ const testConfig = {
 }
 const config = testConfig
 
-const createPaymentRequest = (order) => {
+const createPaymentRequest = (order, payerAlias) => {
 
     const instructionUUID = crypto.randomBytes(16).toString('hex')
 
@@ -22,7 +22,7 @@ const createPaymentRequest = (order) => {
             payeeAlias: config.payeeAlias,
             currency: 'SEK',
             callbackUrl: 'https://webhook.site/6721e832-c7d2-4026-918a-706f6246f163', //replace with actual callbackUrl
-            payerAlias: '046798847345',
+            payerAlias: payerAlias,
             amount: order.price,
             //message: 'BE18',
             payeePaymentReference: order.id || null
