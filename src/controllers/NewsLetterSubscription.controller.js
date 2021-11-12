@@ -38,8 +38,7 @@ const updateNewsLetterSubscription = async (request, response) => {
 
 const checkIfEmailExists = async (request, response) => {
 	try {
-		const databaseResponse = await NewsLetterSubscriptionModel.findOne({email: request.body.email})
-		console.log(databaseResponse)
+		let databaseResponse = await NewsLetterSubscriptionModel.findOne({email: request.body.email})
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
@@ -50,6 +49,6 @@ export default {
 	addNewsLetterSubscription,
 	getAllNewsLetterSubscriptions,
 	updateNewsLetterSubscription,
-	checkIfEmailExist
+	checkIfEmailExists
 }
 
