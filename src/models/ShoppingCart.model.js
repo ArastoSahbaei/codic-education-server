@@ -7,10 +7,10 @@ const shoppingCart = Schema({
 		ref: 'user',
 		required: true
 	},
-	cartItems: [{
+	products: [{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'cartitem',
-	}],
+		ref: 'product',
+	}]
 }, { timestamps: true })
 
 const ShoppingCartSchema = mongoose.model('shoppingcart', shoppingCart)
