@@ -1,5 +1,4 @@
 import PaymentController from '../controllers/Payment.controller.js'
-import Swish from '../modules/Swish.js'
 
 const routes = application => {
 	application.get('/payment/create-order/:data', PaymentController.createOrder)
