@@ -1,29 +1,12 @@
-import EmployeeModel from "../models/Employee.model.js"
+import UserModel from '../models/User.model.js'
 import StatusCode from "../../configurations/StatusCode.js"
 import filesizeFormatter from "../functions/filesizeFormatter.js"
 import path from 'path'
 
-const createEmployee = async (request, response) => {
-    const employee = new EmployeeModel({
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        dateOfBirth: request.body.dateOfBirth,
-        email: request.body.email,
-        mobile: request.body.mobile,
-        employeeInformation: request.body.employeeInformation
-
-    })
-    try {
-        const databaseResponse = await employee.save()
-        response.status(StatusCode.CREATED).send(databaseResponse)
-    } catch (error) {
-        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
-    }
-}
 
 const getAllEmployees = async (request, response) => {
     try {
-        const databaseResponse = await EmployeeModel.find()
+        const databaseResponse = await UserModel.find({ role: 'employee'})
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
@@ -80,7 +63,6 @@ const uploadEmployeeAvatar = async (request, response) => {
 }
 
 export default {
-    createEmployee,
     getAllEmployees,
     updateEmployee,
     deleteEmployeeWithID,
