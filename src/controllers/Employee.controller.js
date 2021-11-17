@@ -16,13 +16,11 @@ const getAllEmployees = async (request, response) => {
 const updateEmployee = async (request, response) => {
     try {
         if (!request.body) { return response.status(StatusCode.BAD_REQUEST).send({ message: 'Empty values were sent' }) }
-        const databaseResponse = await EmployeeModel.findByIdAndUpdate(request.params.employeeId, {
+        const databaseResponse = await UserModel.findByIdAndUpdate(request.params.employeeId, {
             firstName: request.body.firstName,
             lastName: request.body.lastName,
-            dateOfBirth: request.body.dateOfBirth,
             email: request.body.email,
-            mobile: request.body.mobile,
-            employeeInformation: request.body.employeeInformation
+            mobile: request.body.mobile
         }, { new: true })
         response.status(StatusCode.OK).send(databaseResponse)
     } catch (error) {
@@ -35,7 +33,7 @@ const updateEmployee = async (request, response) => {
 
 const deleteEmployeeWithID = async (request, response) => {
     try {
-        await EmployeeModel.findByIdAndDelete(request.params.employeeId)
+        await UserModel.findByIdAndDelete(request.params.employeeId)
         response.status(StatusCode.OK).send({ message: `Sucessfully deleted the employee with ID: ${request.params.employeeId}` })
     } catch (error) {
         response.status(StatusCode.INTERNAL_SERVER_ERROR).send({
@@ -47,7 +45,7 @@ const deleteEmployeeWithID = async (request, response) => {
 
 const uploadEmployeeAvatar = async (request, response) => {
     try {
-        const databaseResponse = await EmployeeModel.findByIdAndUpdate(request.params.employeeId, {
+        const databaseResponse = await UserModel.findByIdAndUpdate(request.params.employeeId, {
             image: {
                 fileName: request.params.employeeId + path.extname(request.file.originalname),
                 filePath: request.file.path,
