@@ -3,7 +3,6 @@ import UserController from '../controllers/User.controller.js'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
-import UserAdminController from '../controllers/User.Admin.Controller.js'
 
 const fileStorageEngine = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -37,7 +36,6 @@ const routes = application => {
 
 	application.delete('/user/:userId', UserController.deleteUserWithID)
 
-	application.put('/admin/updaterole', UserAdminController.updateUserToAdmin)
 }
 
 export default { routes }
