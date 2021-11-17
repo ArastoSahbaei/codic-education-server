@@ -3,7 +3,7 @@ import https from 'https'
 import crypto from 'crypto'
 
 const testConfig = {
-    payeeAlias: "1231181189",
+    payeeAlias: "1231181189", //replace with real payeeAlias
     baseURL: 'https://mss.cpc.getswish.net/swish-cpcapi',
     key: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.key', { encoding: 'utf8' }),
     cert: fs.readFileSync('./configurations/ssl/Swish_Merchant_TestCertificate_1234679304.pem', { encoding: 'utf8' }),
@@ -24,7 +24,6 @@ const createPaymentRequest = (order, payerAlias) => {
             callbackUrl: 'https://webhook.site/6721e832-c7d2-4026-918a-706f6246f163', //replace with actual callbackUrl
             payerAlias: payerAlias,
             amount: order.price,
-            //message: 'BE18',
             payeePaymentReference: order.id || null
         })
     )
