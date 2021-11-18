@@ -17,11 +17,10 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine })
 
 const routes = application => {
-    application.post('/employee', EmployeeController.createEmployee)
     application.get('/employee', EmployeeController.getAllEmployees)
     application.put('/employee/:employeeId', EmployeeController.updateEmployee)
+    application.put('/employee/upload/:employeeId', upload.single('files'), EmployeeController.uploadEmployeeAvatar)
     application.delete('/employee/:employeeId', EmployeeController.deleteEmployeeWithID)
-    application.put('/employee/upload/:employeeId', upload.single('files') , EmployeeController.uploadEmployeeAvatar)
 }
 
 export default { routes }

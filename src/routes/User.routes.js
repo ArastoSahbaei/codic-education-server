@@ -35,6 +35,7 @@ const routes = application => {
 	application.put('/user/upload/:userId', upload.single('files'), UserController.uploadAvatar)
 
 	application.delete('/user/:userId', UserController.deleteUserWithID)
+
 }
 
 export default { routes }
