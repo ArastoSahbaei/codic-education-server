@@ -72,7 +72,12 @@ const userSchema = Schema({
 	favouriteProducts: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
-	}]
+	}],
+	employeeInformation: {
+        startEmployeeDate: Date,
+        lastEmployeeDate: Date,
+        isEmploymentActive: Boolean
+    },
 }, { timestamps: true, strict: true })
 
 const UserModel = mongoose.model('user', userSchema)
