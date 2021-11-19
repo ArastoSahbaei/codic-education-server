@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-const cartItem = Schema({
+const cartItemSchema = Schema({
     product: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',

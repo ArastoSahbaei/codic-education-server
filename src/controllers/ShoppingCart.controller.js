@@ -5,7 +5,7 @@ import UserModel from '../models/User.model.js'
 const addProduct = async (request, response) => {
 	const shoppingCart = new ShoppingCartModel({
 		user: request.body.user,
-		products: request.body.products
+		//cartItems: request.body.products
 	})
 
 	try {
