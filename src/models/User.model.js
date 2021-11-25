@@ -74,6 +74,8 @@ const userSchema = Schema({
 		ref: 'product',
 	}],
 	employeeInformation: {
+		workPhone: String,
+		workEmail: String,
         startEmployeeDate: Date,
         lastEmployeeDate: Date,
         isEmploymentActive: Boolean
