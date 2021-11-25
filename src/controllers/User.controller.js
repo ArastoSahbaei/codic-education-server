@@ -197,11 +197,18 @@ const uploadAvatar = async (request, response) => {
 
 const updatePassword = async (request, response) => {
 	try {
-		const hashedPassword = await encryptPassword(request.body.newPassword)
-		const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
-			password: hashedPassword
-		}, { new: true })
-		response.status(StatusCode.OK).send(databaseResponse)
+		const user = await UserModel.findById(request.body.userId)
+		const res = await bcrypt.compare(request.body.password, user.password)
+		if(res){
+			const hashedPassword = await encryptPassword(request.body.newPassword)
+			const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
+				password: hashedPassword
+			}, { new: true })
+			response.status(StatusCode.OK).send(databaseResponse)
+		}
+		else{
+			response.status(StatusCode.METHOD_NOT_ALLOWED).send('wrong current password')
+		}
 	} catch (error) {
 		response.status(StatusCode.METHOD_NOT_ALLOWED)
 	}
