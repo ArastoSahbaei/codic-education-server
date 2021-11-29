@@ -20,6 +20,7 @@ import CareerRoutes from './src/routes/Career.routes.js'
 import ApplicantRoutes from './src/routes/Applicant.routes.js'
 import { notFound } from './src/middlewares/notFound.js'
 import { errorHandler } from './src/middlewares/errorHandler.js'
+import path from 'path'
 
 const application = express()
 application.use(passport.initialize())
@@ -30,6 +31,8 @@ application.use(morgan('common'))
 
 passportConfig.registerUserini()
 passportConfig.login()
+
+application.use('/public', express.static(path.join(__dirname, 'public')))
 
 UserRoutes.routes(application)
 PaymentRoutes.routes(application)
