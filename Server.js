@@ -14,7 +14,6 @@ import ProductBrandRoutes from './src/routes/ProductBrand.routes.js'
 import ShoppingCartRoutes from './src/routes/ShoppingCart.routes.js'
 import ContactRoutes from './src/routes/Contact.routes.js'
 import NewsLetterSubscriptionRoutes from './src/routes/NewsLetterSubscription.routes.js'
-import EmployeeRoutes from './src/routes/Employee.routes.js'
 import AdminRoutes from './src/routes/Admin.routes.js'
 import CareerRoutes from './src/routes/Career.routes.js'
 import ApplicantRoutes from './src/routes/Applicant.routes.js'
@@ -41,7 +40,6 @@ ProductBrandRoutes.routes(application)
 ShoppingCartRoutes.routes(application)
 NewsLetterSubscriptionRoutes.routes(application)
 CareerRoutes.routes(application)
-EmployeeRoutes.routes(application)
 AdminRoutes.routes(application)
 ApplicantRoutes.routes(application)
 
