@@ -26,6 +26,7 @@ const routes = application => {
 	application.get('/searchuser', UserController.getUserWithQuery)
 	application.get('/user', UserController.getAllUsers)
 	application.get('/user/:userId', UserController.getUserByID)
+	application.get('/employee', UserController.getAllEmployees)
 
 	application.put('/user', authenticateBasicUser, UserController.updateUser)
 	application.put('/updatepassword', UserController.updatePassword)
