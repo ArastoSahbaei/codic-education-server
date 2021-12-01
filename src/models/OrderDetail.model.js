@@ -1,5 +1,0 @@
-/*
-OrderedQuantity
-Quantity
-UnitPrice
-*/
