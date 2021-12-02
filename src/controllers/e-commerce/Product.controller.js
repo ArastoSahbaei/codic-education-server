@@ -1,7 +1,7 @@
-import ProductModel from '../models/Product.model.js'
-import ProductCategoryModel from '../models/ProductCategory.model.js'
-import ProductBrandModel from '../models/ProductBrand.model.js'
-import StatusCode from '../../configurations/StatusCode.js'
+import ProductModel from '../../models/e-commerce/Product.model.js'
+import ProductCategoryModel from '../../models/e-commerce/ProductCategory.model.js'
+import ProductBrandModel from '../../models/e-commerce/ProductBrand.model.js'
+import StatusCode from '../../../configurations/StatusCode.js'
 
 const createProduct = async (request, response) => {
   console.log(request.body);

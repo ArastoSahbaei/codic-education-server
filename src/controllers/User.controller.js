@@ -1,5 +1,5 @@
 import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
-import ShoppingCartModel from '../models/ShoppingCart.model.js'
+import ShoppingCartModel from '../models/e-commerce/ShoppingCart.model.js'
 import UserModel from '../models/User.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
 import filesizeFormatter from "../functions/filesizeFormatter.js"

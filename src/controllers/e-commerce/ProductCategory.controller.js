@@ -1,5 +1,5 @@
-import ProductCategoryModel from '../models/ProductCategory.model.js'
-import StatusCode from '../../configurations/StatusCode.js'
+import ProductCategoryModel from '../../models/e-commerce/ProductCategory.model.js'
+import StatusCode from '../../../configurations/StatusCode.js'
 
 const createProductCategory = async (request, response) => {
 	const productCategory = new ProductCategoryModel({ productCategoryName: request.body.productCategoryName })
