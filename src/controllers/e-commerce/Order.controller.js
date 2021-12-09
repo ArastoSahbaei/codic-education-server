@@ -1,5 +1,5 @@
-import OrderModel from '../models/Order.model.js'
-import StatusCode from '../../configurations/StatusCode.js'
+import OrderModel from '../../models/e-commerce/Order.model.js'
+import StatusCode from '../../../configurations/StatusCode.js'
 
 const getOrderById = async (request, response) => {
 	try {

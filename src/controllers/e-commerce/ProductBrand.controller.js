@@ -1,5 +1,5 @@
-import ProductBrand from '../models/ProductBrand.model.js'
-import StatusCode from '../../configurations/StatusCode.js'
+import ProductBrand from '../../models/e-commerce/ProductBrand.model.js'
+import StatusCode from '../../../configurations/StatusCode.js'
 
 const createProductBrand = async (request, response) => {
 	const productBrand = new ProductBrand({

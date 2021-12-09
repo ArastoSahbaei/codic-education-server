@@ -1,4 +1,4 @@
-import ShoppingCartController from '../controllers/ShoppingCart.controller.js'
+import ShoppingCartController from '../../controllers/e-commerce/ShoppingCart.controller.js'
 
 const routes = application => {
 	/* application.post('/shoppingcart/add', ShoppingCartController.addProduct) */
