@@ -1,4 +1,4 @@
-import ProductCategoryController from '../controllers/ProductCategory.controller.js'
+import ProductCategoryController from '../../controllers/e-commerce/ProductCategory.controller.js'
 
 
 const routes = application => {

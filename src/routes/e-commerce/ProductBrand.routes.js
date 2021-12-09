@@ -1,4 +1,4 @@
-import ProductBrandController from '../controllers/ProductBrand.controller.js'
+import ProductBrandController from '../../controllers/e-commerce/ProductBrand.controller.js'
 
 const routes = application => {
 	application.post('/productbrand', ProductBrandController.createProductBrand)

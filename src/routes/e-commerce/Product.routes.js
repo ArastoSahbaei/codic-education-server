@@ -1,4 +1,4 @@
-import ProductController from '../controllers/Product.controller.js'
+import ProductController from '../../controllers/e-commerce/Product.controller.js'
 
 const routes = application => {
 	application.post('/product', ProductController.createProduct)

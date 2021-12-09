@@ -1,5 +1,5 @@
 import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
-import ShoppingCartModel from '../models/ShoppingCart.model.js'
+import ShoppingCartModel from '../models/e-commerce/ShoppingCart.model.js'
 import UserModel from '../models/User.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
 import filesizeFormatter from "../functions/filesizeFormatter.js"
@@ -264,6 +264,15 @@ const resetPassword = async (request, response) => {
 	}
 }
 
+const getAllEmployees = async (request, response) => {
+    try {
+        const databaseResponse = await UserModel.find({ role: 'employee'})
+        response.status(StatusCode.OK).send(databaseResponse)
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
+    }
+}
+
 export default {
 	testingAuthenticatedRoute,
 	login,
@@ -278,5 +287,6 @@ export default {
 	updateCart,
 	updateFavouriteProducts,
 	deleteUserWithID,
-	uploadAvatar
+	uploadAvatar,
+	getAllEmployees
 }
