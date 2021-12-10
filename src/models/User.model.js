@@ -73,6 +73,10 @@ const userSchema = Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'product',
 	}],
+	orders: [{
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'order'
+	}],
 	employeeInformation: {
 		workPhone: String,
 		workEmail: String,

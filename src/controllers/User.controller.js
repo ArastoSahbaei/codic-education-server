@@ -58,6 +58,9 @@ const login = async (request, response, next) => {
 					.populate('newsLetterSubscription')
 					.populate('favouriteProducts')
 					.populate({ path: 'shoppingCart', populate: { path: 'products' } })
+					.populate({ path: 'orders', populate: { path: 'orderItems', populate: {
+						path: 'product'
+					}} })
 					.then(user => {
 						const token = jwt.sign({ id: user._id }, 'jwtSecret.secret', { expiresIn: 60 * 60 })
 						response.status(StatusCode.OK).send({
@@ -127,7 +130,10 @@ const getUserByID = async (request, response) => {
 		const databaseResponse = await (await UserModel.findOne({ _id: request.params.userId })
 			.populate('newsLetterSubscription')
 			.populate('favouriteProducts')
-			.populate({ path: 'shoppingCart', populate: { path: 'products' } }))
+			.populate({ path: 'shoppingCart', populate: { path: 'products' } })
+			.populate({ path: 'orders', populate: { path: 'orderItems', populate: {
+				path: 'product'
+			}} }))
 		response.status(StatusCode.OK).send(databaseResponse)
 	} catch (error) {
 		response.status(StatusCode.INTERNAL_SERVER_ERROR).send({

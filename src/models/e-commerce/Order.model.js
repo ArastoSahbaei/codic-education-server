@@ -9,33 +9,60 @@ const orderSchema = Schema(
   {
     paypalOrderId: {
       type: String,
-      require: false,
+      required: false,
     },
     paypalCaptureId: {
       type: String,
-      require: false,
+      required: false,
     },
     paypalAuthorizeId: {
       type: String,
-      require: false,
+      required: false,
     },
     paypalToken: {
       type: String,
-      require: false
+      required: false
+    },
+    swishUuid: {
+      type: String,
+      required: false
+    },
+    swishPaymentReference: {
+      type: String,
+      required: false
     },
     price: {
       type: Number,
-      require: true,
+      //required: true,
     },
     products: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "product",
-      required: true,
+      //required: true,
     },
+    orderItems: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "orderItem",
+      required: true,
+    }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: true,
+    },
+    shipping:{
+      fullName: {
+        type: String,
+        required: true
+      },
+      shippingAdress: {
+        type: String,
+        required: true,
+      },
+      shippingMethod: {
+        type: String,
+        required: true
+      }
     },
     shippedAt: {
       type: Date,
