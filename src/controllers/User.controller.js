@@ -67,6 +67,7 @@ const login = async (request, response, next) => {
 							username: user.username,
 							_id: user._id,
 							email: user.email,
+							role: user.role,
 							newsLetterSubscription: user.newsLetterSubscription,
 							favouriteProducts: user.favouriteProducts,
 							personalDetails: user.personalDetails,
