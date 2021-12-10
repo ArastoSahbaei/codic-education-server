@@ -1,4 +1,4 @@
-import ProductCategoryModel from "../../../src/models/ProductCategory.model.js"
+import ProductCategoryModel from "../../../src/models/e-commerce/ProductCategory.model.js"
 
 export const productCCategoriesData =
 	[

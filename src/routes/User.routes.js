@@ -6,7 +6,7 @@ import fs from 'fs'
 
 const fileStorageEngine = multer.diskStorage({
 	destination: (req, file, cb) => {
-		const pathDestination = "configurations/uploads/useravatars"
+		const pathDestination = "public/uploads/useravatars"
 		fs.mkdirSync(pathDestination, { recursive: true })
 		return cb(null, pathDestination)
 	},
@@ -26,6 +26,7 @@ const routes = application => {
 	application.get('/searchuser', UserController.getUserWithQuery)
 	application.get('/user', UserController.getAllUsers)
 	application.get('/user/:userId', UserController.getUserByID)
+	application.get('/employee', UserController.getAllEmployees)
 
 	application.put('/user', authenticateBasicUser, UserController.updateUser)
 	application.put('/updatepassword', UserController.updatePassword)
@@ -35,6 +36,7 @@ const routes = application => {
 	application.put('/user/upload/:userId', upload.single('files'), UserController.uploadAvatar)
 
 	application.delete('/user/:userId', UserController.deleteUserWithID)
+
 }
 
 export default { routes }

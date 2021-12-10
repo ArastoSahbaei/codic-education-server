@@ -1,8 +1,8 @@
 import StatusCode from "../../../configurations/StatusCode.js";
-import OrderModel from "../../models/Order.model.js";
-import OrderItemModel from "../../models/OrderItem.model.js";
+import OrderModel from "../../models/e-commerce/Order.model.js";
+import OrderItemModel from "../../models/e-commerce/OrderItem.model.js";
 import UserModel from "../../models/User.model.js";
-import ProductModel from "../../models/Product.model.js";
+import ProductModel from "../../models/e-commerce/Product.model.js";
 import { calcTotal} from '../../functions/functions.js';
 import Swish from "../../modules/Swish.js"
 

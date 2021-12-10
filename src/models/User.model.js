@@ -76,8 +76,14 @@ const userSchema = Schema({
 	orders: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'order'
-	}]
-
+	}],
+	employeeInformation: {
+		workPhone: String,
+		workEmail: String,
+        startEmployeeDate: Date,
+        lastEmployeeDate: Date,
+        isEmploymentActive: Boolean
+    },
 }, { timestamps: true, strict: true })
 
 const UserModel = mongoose.model('user', userSchema)

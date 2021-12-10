@@ -1,4 +1,4 @@
-import ProductBrandModel from '../../../src/models/ProductBrand.model.js'
+import ProductBrandModel from '../../../src/models/e-commerce/ProductBrand.model.js'
 
 export const productBrandData =
 	[

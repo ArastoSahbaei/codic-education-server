@@ -1,8 +1,0 @@
-/*
-OrderId
-dateCreated
-dateShipped
-Reference to User
-OrderTotal
-Status
-*/

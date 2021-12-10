@@ -1,5 +1,5 @@
 import NewsLetterSubscriptionModel from '../models/NewsLetterSubscription.model.js'
-import ShoppingCartModel from '../models/ShoppingCart.model.js'
+import ShoppingCartModel from '../models/e-commerce/ShoppingCart.model.js'
 import UserModel from '../models/User.model.js'
 import StatusCode from '../../configurations/StatusCode.js'
 import filesizeFormatter from "../functions/filesizeFormatter.js"
@@ -203,11 +203,18 @@ const uploadAvatar = async (request, response) => {
 
 const updatePassword = async (request, response) => {
 	try {
-		const hashedPassword = await encryptPassword(request.body.newPassword)
-		const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
-			password: hashedPassword
-		}, { new: true })
-		response.status(StatusCode.OK).send(databaseResponse)
+		const user = await UserModel.findById(request.body.userId)
+		const res = await bcrypt.compare(request.body.password, user.password)
+		if(res){
+			const hashedPassword = await encryptPassword(request.body.newPassword)
+			const databaseResponse = await UserModel.findByIdAndUpdate({ _id: request.body.userId }, {
+				password: hashedPassword
+			}, { new: true })
+			response.status(StatusCode.OK).send(databaseResponse)
+		}
+		else{
+			response.status(StatusCode.METHOD_NOT_ALLOWED).send('wrong current password')
+		}
 	} catch (error) {
 		response.status(StatusCode.METHOD_NOT_ALLOWED)
 	}
@@ -263,6 +270,15 @@ const resetPassword = async (request, response) => {
 	}
 }
 
+const getAllEmployees = async (request, response) => {
+    try {
+        const databaseResponse = await UserModel.find({ role: 'employee'})
+        response.status(StatusCode.OK).send(databaseResponse)
+    } catch (error) {
+        response.status(StatusCode.INTERNAL_SERVER_ERROR).send({ message: error.message })
+    }
+}
+
 export default {
 	testingAuthenticatedRoute,
 	login,
@@ -277,5 +293,6 @@ export default {
 	updateCart,
 	updateFavouriteProducts,
 	deleteUserWithID,
-	uploadAvatar
+	uploadAvatar,
+	getAllEmployees
 }

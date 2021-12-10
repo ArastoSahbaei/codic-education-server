@@ -1,4 +1,3 @@
-import { populateEmployees } from './data/employeeData.js'
 import { populateProductBrands } from './data/productBrandData.js'
 import { populateProductCategories } from './data/productCategories.js'
 import { populateCareerApplications } from './data/careerApplicationData.js'
@@ -7,7 +6,6 @@ import Configurations from '../Configurations.js'
 import dotenv from 'dotenv'
 
 export const populateDatabase = () => {
-	populateEmployees()
 	populateProductBrands()
 	populateProductCategories()
 	populateCareerApplications()
